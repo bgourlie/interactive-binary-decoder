@@ -1,0 +1,7 @@
+[package]
+name = "interactive-binary-decoder-rs"
+version = "0.1.0"
+authors = ["W. Brian Gourlie <bgourlie@gmail.com>"]
+
+[dependencies]
+stdweb = "*"
