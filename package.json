@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "dev": "parcel ./app.html",
+    "dev": "parcel ./src/app.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
