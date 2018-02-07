@@ -4,7 +4,9 @@ extern crate stdweb;
 fn main() {
     stdweb::initialize();
 
-    let message = "Hello, 世界!";
+    let number = -1323453234_f64;
+    let number_bytes: [u8; 8] = unsafe {std::mem::transmute(number)};
+    let message = format!("{:?}", number_bytes);
     js! {
         alert( @{message} );
     }
