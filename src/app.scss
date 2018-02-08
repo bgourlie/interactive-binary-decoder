@@ -1,3 +1,22 @@
-body {
-  background-color: green;
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+#bits {
+  display: flex;
+  justify-content: center;
+
+  .float {
+    display: flex;
+
+    .bits {
+      display: flex;
+
+      > div {
+        padding: 3px;
+        font-size: 18px;
+        font-family: "Courier New", monospace;
+      }
+    }
+  }
 }
