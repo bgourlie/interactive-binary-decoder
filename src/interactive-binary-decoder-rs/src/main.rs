@@ -9,8 +9,24 @@ extern crate serde_json;
 
 extern crate bitreader;
 
-use stdweb::web::document;
+use std::f64;
+use std::str::FromStr;
+use stdweb::unstable::TryInto;
+use stdweb::web::{document, IEventTarget};
+use stdweb::web::event::KeyupEvent;
+use stdweb::web::html_element::InputElement;
+
 use bitreader::BitReader;
+
+// Shamelessly stolen from webplatform's TodoMVC example.
+macro_rules! enclose {
+    ( ($( $x:ident ),*) $y:expr ) => {
+        {
+            $(let $x = $x.clone();)*
+            $y
+        }
+    };
+}
 
 #[derive(Clone, Serialize, Deserialize)]
 struct Float64 {
@@ -63,8 +79,20 @@ impl Float64 {
 
 fn main() {
     stdweb::initialize();
-    let f64_bits = Float64::new(1.0);
-    update(f64_bits);
+    let float_input: InputElement = document()
+        .get_element_by_id("float-input")
+        .unwrap()
+        .try_into()
+        .unwrap();
+
+    float_input.add_event_listener(enclose!( (float_input) move |_: KeyupEvent| {
+        let input_val = float_input.value().into_string().unwrap();
+        let parsed_float = f64::from_str(&input_val).unwrap_or(f64::NAN);
+        let float64 = Float64::new(parsed_float);
+        update(float64);
+    }));
+
+    update(Float64::new(1.0));
     stdweb::event_loop();
 }
 
