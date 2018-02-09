@@ -7,16 +7,13 @@ extern crate serde_derive;
 #[macro_use]
 extern crate serde_json;
 
-extern crate bitreader;
-
 use std::f64;
 use std::str::FromStr;
+use std::fmt::Write;
 use stdweb::unstable::TryInto;
 use stdweb::web::{document, IEventTarget};
 use stdweb::web::event::KeyupEvent;
 use stdweb::web::html_element::InputElement;
-
-use bitreader::BitReader;
 
 // Shamelessly stolen from webplatform's TodoMVC example.
 macro_rules! enclose {
@@ -35,36 +32,45 @@ struct Float64 {
     exponent_value: u16,
     mantissa_bits: Vec<bool>,
     mantissa_value: u64,
+    original_value: f64,
 }
 
 js_serializable!(Float64);
 
 impl Float64 {
-    fn new(val: f64) -> Float64 {
-        let raw_bytes: [u8; 8] = unsafe { std::mem::transmute(val) };
+    fn new(original_value: f64) -> Float64 {
+        let bit_string: Vec<char> = {
+            let mut raw_bytes: [u8; 8] = unsafe { std::mem::transmute(original_value) };
+            &raw_bytes.reverse();
+
+            let mut s = String::new();
+            for &byte in &raw_bytes {
+                write!(&mut s, "{:0>8b}", byte).expect("Couldn't write byte string to buffer");
+            }
+            s.chars().collect()
+        };
 
         let (sign_bit, exponent_bits, mantissa_bits) = {
-            let mut reader = BitReader::new(&raw_bytes);
-
-            let mut mantissa_bits = Vec::with_capacity(52);
-            for _ in 0..52 {
-                mantissa_bits.push(reader.read_bool().unwrap());
-            }
+            let sign_bit = char_to_bit(bit_string[0]);
 
             let mut exponent_bits = Vec::with_capacity(11);
-            for _ in 0..11 {
-                exponent_bits.push(reader.read_bool().unwrap());
+            for i in 1..12 {
+                exponent_bits.push(char_to_bit(bit_string[i]));
             }
 
-            let sign_bit = reader.read_bool().unwrap();
+            let mut mantissa_bits = Vec::with_capacity(52);
+            for i in 12..64 {
+                mantissa_bits.push(char_to_bit(bit_string[i]));
+            }
+
             (sign_bit, exponent_bits, mantissa_bits)
         };
 
         let (exponent_value, mantissa_value) = {
-            let mut reader = BitReader::new(&raw_bytes);
-            let mantissa_value = reader.read_u64(52).unwrap();
-            let exponent_value = reader.read_u16(11).unwrap();
-            (exponent_value, mantissa_value)
+            //            let mut reader = BitReader::new(&raw_bytes);
+            //            let mantissa_value = reader.read_u64(52).unwrap();
+            //            let exponent_value = reader.read_u16(11).unwrap();
+            (0, 0)
         };
 
         Float64 {
@@ -73,7 +79,18 @@ impl Float64 {
             exponent_value,
             mantissa_bits,
             mantissa_value,
+            original_value,
         }
+    }
+}
+
+fn char_to_bit(c: char) -> bool {
+    if c == '0' {
+        false
+    } else if c == '1' {
+        true
+    } else {
+        panic!("Unexpected character {}", c);
     }
 }
 
@@ -92,7 +109,7 @@ fn main() {
         update(float64);
     }));
 
-    update(Float64::new(1.0));
+    update(Float64::new(0.0));
     stdweb::event_loop();
 }
 
