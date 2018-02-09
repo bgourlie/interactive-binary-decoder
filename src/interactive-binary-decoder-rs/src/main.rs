@@ -29,7 +29,7 @@ macro_rules! enclose {
 struct Float64 {
     sign_bit: bool,
     exponent_bits: Vec<bool>,
-    exponent_value: u16,
+    exponent_value: i16,
     mantissa_bits: Vec<bool>,
     mantissa_value: u64,
     original_value: f64,
@@ -38,9 +38,25 @@ struct Float64 {
 js_serializable!(Float64);
 
 impl Float64 {
-    fn new(original_value: f64) -> Float64 {
+    fn new(f64_val: f64) -> Float64 {
+        let f64_bytes: [u8; 8] = unsafe { std::mem::transmute(f64_val) };
+
+        let exponent_value: i16 = {
+            let mut exponent_bytes = [0_u8; 2];
+            exponent_bytes[0] = (f64_bytes[7] << 4) | f64_bytes[6] >> 4;
+            exponent_bytes[1] = (f64_bytes[7] & 0b0111_1111) >> 4;
+            unsafe { std::mem::transmute(exponent_bytes) }
+        };
+
+        let mantissa_value: u64 = {
+            let mut mantissa_bytes = f64_bytes.clone();
+            mantissa_bytes[7] = 0;
+            mantissa_bytes[6] = mantissa_bytes[6] & 0b0001_1111;
+            unsafe { std::mem::transmute(mantissa_bytes) }
+        };
+
         let bit_string: Vec<char> = {
-            let mut raw_bytes: [u8; 8] = unsafe { std::mem::transmute(original_value) };
+            let mut raw_bytes = f64_bytes.clone();
             &raw_bytes.reverse();
 
             let mut s = String::new();
@@ -66,20 +82,13 @@ impl Float64 {
             (sign_bit, exponent_bits, mantissa_bits)
         };
 
-        let (exponent_value, mantissa_value) = {
-            //            let mut reader = BitReader::new(&raw_bytes);
-            //            let mantissa_value = reader.read_u64(52).unwrap();
-            //            let exponent_value = reader.read_u16(11).unwrap();
-            (0, 0)
-        };
-
         Float64 {
             sign_bit,
             exponent_bits,
             exponent_value,
             mantissa_bits,
             mantissa_value,
-            original_value,
+            original_value: f64_val,
         }
     }
 }
