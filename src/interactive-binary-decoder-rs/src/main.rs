@@ -90,13 +90,18 @@ fn main() {
 
     float_input.add_event_listener(enclose!( (float_input) move |_: KeyupEvent| {
         let input_val = float_input.value().into_string().unwrap();
-        let parsed_float = f64::from_str(&input_val).unwrap_or(f64::NAN);
+        let parsed_float = parse_float(&input_val);
         let float64 = Float64::new(parsed_float);
         update(float64);
     }));
 
-    update(Float64::new(0.0));
+    let initial_value = float_input.value().into_string().unwrap();
+    update(Float64::new(parse_float(&initial_value)));
     stdweb::event_loop();
+}
+
+fn parse_float(string_val: &str) -> f64 {
+    f64::from_str(string_val).unwrap_or(f64::NAN)
 }
 
 fn update(props: Float64) {
