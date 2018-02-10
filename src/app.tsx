@@ -19,6 +19,9 @@ const Float = (props: FloatValue) => {
     const mantissaBits = props.mantissa_bits.map((bit, i) => <div key={i}>{bit ? "1" : "0"}</div>);
     return (
         <div>
+            <div className="inputRow">
+                <input id="float-input" type="text" value="0.0" />
+            </div>
             <div className="float">
                 <div className="sign">
                     <div className="bits">
@@ -43,7 +46,5 @@ const Float = (props: FloatValue) => {
     );
 };
 
-(window as AppWindow).update = (state: FloatValue) => {
-    ReactDOM.render(Float(state), document.getElementById("float-view"));
-};
-
+const appWindow = window as AppWindow;
+appWindow.update = (state: FloatValue) => ReactDOM.render(Float(state), document.getElementById("float-view"));

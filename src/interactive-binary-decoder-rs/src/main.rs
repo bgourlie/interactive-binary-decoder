@@ -1,3 +1,5 @@
+#![feature(proc_macro)]
+
 #[macro_use]
 extern crate stdweb;
 
@@ -7,19 +9,9 @@ extern crate serde_derive;
 use std::f64;
 use std::str::FromStr;
 use stdweb::unstable::TryInto;
-use stdweb::web::{document, IEventTarget};
-use stdweb::web::event::KeyupEvent;
+use stdweb::js_export;
+use stdweb::web::document;
 use stdweb::web::html_element::InputElement;
-
-// Shamelessly stolen from webplatform's TodoMVC example.
-macro_rules! enclose {
-    ( ($( $x:ident ),*) $y:expr ) => {
-        {
-            $(let $x = $x.clone();)*
-            $y
-        }
-    };
-}
 
 #[derive(Serialize, Deserialize)]
 struct Float64 {
@@ -82,21 +74,7 @@ fn to_bit(f64_bytes: &[u8], bit_position: usize) -> bool {
 
 fn main() {
     stdweb::initialize();
-    let float_input: InputElement = document()
-        .get_element_by_id("float-input")
-        .unwrap()
-        .try_into()
-        .unwrap();
-
-    float_input.add_event_listener(enclose!( (float_input) move |_: KeyupEvent| {
-        let input_val = float_input.value().into_string().unwrap();
-        let parsed_float = parse_float(&input_val);
-        let float64 = Float64::new(parsed_float);
-        update(float64);
-    }));
-
-    let initial_value = float_input.value().into_string().unwrap();
-    update(Float64::new(parse_float(&initial_value)));
+    update();
     stdweb::event_loop();
 }
 
@@ -104,8 +82,17 @@ fn parse_float(string_val: &str) -> f64 {
     f64::from_str(string_val).unwrap_or(f64::NAN)
 }
 
-fn update(props: Float64) {
+fn update() {
+    let float_input: InputElement = document()
+        .get_element_by_id("float-input")
+        .unwrap()
+        .try_into()
+        .unwrap();
+
+    let input_val = float_input.value().into_string().unwrap();
+    let parsed_float = parse_float(&input_val);
+    let float64 = Float64::new(parsed_float);
     js! {
-        update( @{props} );
+        update( @{float64} );
     }
 }
