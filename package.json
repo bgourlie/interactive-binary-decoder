@@ -3,21 +3,25 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
+    "clean": "node ./clean.js",
     "dev": "parcel ./src/app.html",
+    "dev-debug": "node %NODE_DEBUG_OPTION% ./node_modules/parcel-bundler/bin/cli.js ./src/app.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "W. Brian Gourlie",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^16.0.36",
+    "@types/react-dom": "^16.0.3",
+    "@types/shelljs": "^0.7.8",
     "node-sass": "^4.7.2",
     "parcel-bundler": "^1.5.1",
     "parcel-plugin-cargo-web": "^0.1.0",
+    "shelljs": "^0.8.1",
     "typescript": "^2.7.1"
   },
   "dependencies": {
-    "@types/react": "^16.0.36",
-    "@types/react-dom": "^16.0.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   }
