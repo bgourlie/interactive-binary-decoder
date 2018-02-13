@@ -24,12 +24,14 @@ struct Float {
     mantissa_bits: Vec<bool>,
     mantissa_value: u64,
     native_value: f64,
+    parsed_from: String,
 }
 
 js_serializable!(Float);
 
 impl Float {
-    fn new(native_value: f64) -> Float {
+    fn new(string_representation: &str) -> Float {
+        let native_value = f64::from_str(string_representation).unwrap_or(f64::NAN);
         let f64_bytes: [u8; 8] = unsafe { std::mem::transmute(native_value) };
 
         let exponent_value: u16 = {
@@ -65,13 +67,8 @@ impl Float {
             mantissa_bits,
             mantissa_value,
             native_value,
+            parsed_from: string_representation.to_owned(),
         }
-    }
-}
-
-impl Default for Float {
-    fn default() -> Self {
-        Float::new(0.0)
     }
 }
 
@@ -88,6 +85,5 @@ fn main() {
 
 #[js_export]
 fn parse_float(string_val: &str) -> Float {
-    let val = f64::from_str(string_val).unwrap_or(f64::NAN);
-    Float::new(val)
+    Float::new(string_val)
 }

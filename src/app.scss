@@ -12,10 +12,43 @@ body {
 
   .inputRow {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+
+    input {
+      outline: none;
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 1px solid #ccc;
+      font-size: 20px;
+      width: 400px;
+      text-align: center;
+      font-family: "Courier New", monospace;
+    }
+
+    .decoded-value {
+      opacity: 0;
+      transition: opacity 300ms ease-out;
+      padding: 10px;
+
+      &.show {
+        opacity: 1;
+      }
+    }
   }
 
-  .float {
+  .decoded-float {
     display: flex;
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+    padding: 10px;
+
+    &.show {
+      opacity: 1;
+    }
+
 
     .sign, .exponent, .mantissa {
       display: flex;
