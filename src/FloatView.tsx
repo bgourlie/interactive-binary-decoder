@@ -21,6 +21,7 @@ const FloatView = (props: FloatProps) => {
         <div>
             <div className="inputRow">
                 <input id="float-input" type="text" onChange={floatInputChangedHandler} />
+                <div className="origValue">{props.value.native_value.toString(10)}</div>
             </div>
             <div className="float">
                 <div className="sign">
@@ -41,7 +42,6 @@ const FloatView = (props: FloatProps) => {
                     <div className="value">{props.value.mantissa_value}</div>
                 </div>
             </div>
-            <div className="origValue">{props.value.original_value.toString(10)}</div>
         </div>
     );
 };

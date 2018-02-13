@@ -6,7 +6,7 @@ declare module 'Cargo.toml' {
         exponent_value: number,
         mantissa_bits: [boolean],
         mantissa_value: number,
-        original_value: number
+        native_value: number
     }
 
     export function parse_float(input: string): Float;

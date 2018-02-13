@@ -23,14 +23,14 @@ struct Float {
     exponent_value: u16,
     mantissa_bits: Vec<bool>,
     mantissa_value: u64,
-    original_value: f64,
+    native_value: f64,
 }
 
 js_serializable!(Float);
 
 impl Float {
-    fn new(f64_val: f64) -> Float {
-        let f64_bytes: [u8; 8] = unsafe { std::mem::transmute(f64_val) };
+    fn new(native_value: f64) -> Float {
+        let f64_bytes: [u8; 8] = unsafe { std::mem::transmute(native_value) };
 
         let exponent_value: u16 = {
             let mut exponent_bytes = [0_u8; 2];
@@ -64,7 +64,7 @@ impl Float {
             exponent_value,
             mantissa_bits,
             mantissa_value,
-            original_value: f64_val,
+            native_value,
         }
     }
 }
