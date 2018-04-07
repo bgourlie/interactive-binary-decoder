@@ -12,19 +12,19 @@
   "author": "W. Brian Gourlie",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^16.0.36",
-    "@types/react-dom": "^16.0.3",
+    "@types/react": "^16.3.5",
+    "@types/react-dom": "^16.0.4",
     "@types/shelljs": "^0.7.8",
-    "node-sass": "^4.7.2",
-    "parcel-bundler": "^1.5.1",
-    "parcel-plugin-cargo-web": "^0.1.0",
+    "node-sass": "^4.8.3",
+    "parcel-bundler": "^1.7.0",
+    "parcel-plugin-cargo-web": "koute/parcel-plugin-cargo-web",
     "shelljs": "^0.8.1",
-    "typescript": "^2.7.1"
+    "typescript": "^2.8.1"
   },
   "dependencies": {
     "popper.js": "^1.12.9",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
     "react-popper": "^0.8.2"
   }
 }
