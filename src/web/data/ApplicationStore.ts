@@ -1,8 +1,8 @@
 const Immutable = require("immutable/dist/immutable");
 import { ReduceStore } from "flux/utils";
-import { ApplicationAction } from "./ApplicationAction";
+import { ApplicationAction, InitialLoadAction } from "./ApplicationAction";
 import AppDispatcher from "./ApplicationDispatcher";
-import { ApplicationState } from "./ApplicationState";
+import { ApplicationState, LoadingState } from "./ApplicationState";
 
 export abstract class BaseApplicationStore extends ReduceStore<
   ApplicationState,
@@ -20,15 +20,15 @@ class ApplicationStore extends BaseApplicationStore {
     return "app-store";
   }
 
-  getState(): ApplicationState {
+  getState(): LoadingState {
     return super.getState();
   }
 
-  getInitialState(): ApplicationState {
-    return { state: "loading", model: {} };
+  getInitialState(): LoadingState {
+    return { state: "loading", model: { name: "brian" } };
   }
 
-  reduce(state: ApplicationState, action: ApplicationAction): ApplicationState {
+  reduce(state: LoadingState, action: InitialLoadAction): ApplicationState {
     return Immutable.OrderedMap();
   }
 }

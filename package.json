@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "node ./clean.js",
     "dev": "parcel ./src/app.html",
+    "dev2": "parcel ./src/web/root.html",
     "dev-debug": "node %NODE_DEBUG_OPTION% ./node_modules/parcel-bundler/bin/cli.js ./src/app.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +19,7 @@
     "@types/shelljs": "^0.7.8",
     "node-sass": "^4.8.3",
     "parcel-bundler": "^1.7.0",
-    "parcel-plugin-cargo-web": "koute/parcel-plugin-cargo-web",
+    "parcel-plugin-cargo-web": "github:koute/parcel-plugin-cargo-web",
     "shelljs": "^0.8.1",
     "typescript": "^2.8.1"
   },
@@ -28,6 +29,8 @@
     "popper.js": "^1.12.9",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-popper": "^0.8.2"
+    "react-popper": "^0.8.2",
+    "react-typestyle": "^0.3.3",
+    "typestyle": "^1.7.2"
   }
 }
