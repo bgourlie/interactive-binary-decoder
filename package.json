@@ -22,7 +22,9 @@
     "typescript": "^2.7.1"
   },
   "dependencies": {
+    "popper.js": "^1.12.9",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-popper": "^0.8.2"
   }
 }
