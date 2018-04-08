@@ -1,0 +1,36 @@
+@font-face {
+  font-family: "Besley Medium";
+  src: url("./static/Besley-Medium.otf") format("opentype");
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Besley Medium", serif;
+}
+
+#app-body {
+  #header {
+    text-align: center;
+  }
+
+  #toc-and-view {
+    display: flex;
+
+    #table-of-contents {
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    #view {
+      flex: 1;
+      padding: 0 20px;
+    }
+  }
+}
