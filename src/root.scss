@@ -15,14 +15,28 @@ a {
 
 html {
   font-size: 16px;
+  height: 100%;
+  display: flex;
 }
 
 body {
+  display: flex;
   font-family: "Besley Medium", serif;
+  flex: 1;
+}
+
+#app-container {
+  display: flex;
+  flex: 1;
+}
+
+#app-container-inner {
+  display: flex;
+  flex-direction: column;
 }
 
 #header {
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 
   .title {
     font-size: 1.5rem;
@@ -35,20 +49,26 @@ body {
 
 #app-body {
   display: flex;
+  flex: 1;
 }
 
 #table-of-contents {
+  display: flex;
+  padding: 0 1rem;
+  border-right: 1px solid #ccc;
+
   > ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 
     > li {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       margin: 0 0 1rem 0;
 
       > .chapter-name {
         margin: 0 0 0.5em 0;
+        text-decoration: underline;
       }
 
       > ul {
@@ -61,7 +81,7 @@ body {
           margin: 0 0 0.5rem 0;
 
           > a {
-            color: #666;
+            color: #aaa;
 
             &.active {
               color: black;
