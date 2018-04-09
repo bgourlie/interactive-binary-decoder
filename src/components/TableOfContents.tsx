@@ -1,56 +1,52 @@
 import * as React from "react";
-import * as Paths from "./paths";
-import ChapterLink from "./ChapterLink";
+import Chapter from "./Chapter";
+import { ChapterModel } from "../models";
+import * as PropTypes from "prop-types";
 
-export default class TableOfContents extends React.Component {
-  render(): React.ReactNode {
-    return (
-      <nav id="table-of-contents">
-        <ul>
-          <li>
-            <header className="chapter-name">Introduction</header>
-            <ul>
-              <li>
-                <ChapterLink to={Paths.CHAPTER_01_SECTION_01}>
-                  Welcome!
-                </ChapterLink>
-              </li>
-              <li>
-                <ChapterLink to={Paths.CHAPTER_01_SECTION_02}>
-                  Representing numbers in binary
-                </ChapterLink>
-              </li>
-              <li>
-                <ChapterLink to={Paths.CHAPTER_01_SECTION_03}>
-                  Integer Representations
-                </ChapterLink>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <header className="chapter-name">
-              The Floating Point Binary Format
-            </header>
-            <ul>
-              <li>
-                <ChapterLink to={Paths.CHAPTER_02_SECTION_01}>
-                  The Sign Bit
-                </ChapterLink>
-              </li>
-              <li>
-                <ChapterLink to={Paths.CHAPTER_02_SECTION_02}>
-                  The Exponent Bits
-                </ChapterLink>
-              </li>
-              <li>
-                <ChapterLink to={Paths.CHAPTER_02_SECTION_03}>
-                  The Mantissa Bits
-                </ChapterLink>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-    );
-  }
+interface TableOfContentsComponent {
+  propTypes?: PropTypes.ValidationMap<TableOfContentsBaseProperties>;
+
+  (props: TableOfContentsProperties): React.ReactElement<
+    TableOfContentsProperties
+  >;
 }
+
+interface TableOfContentsBaseProperties {
+  readonly chapters: any;
+}
+
+interface TableOfContentsProperties
+  extends TableOfContentsBaseProperties,
+    JSX.IntrinsicAttributes {
+  readonly chapters: ChapterModel[];
+}
+
+const TableOfContentsPropertyDefinition: TableOfContentsBaseProperties = {
+  chapters: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      sections: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          path: PropTypes.string.isRequired
+        })
+      )
+    })
+  )
+};
+
+const TableOfContents: TableOfContentsComponent = (
+  props: TableOfContentsProperties
+) => (
+  <nav id="table-of-contents">
+    <ul>
+      {props.chapters.map(chapter => (
+        <Chapter key={chapter.id} chapter={chapter} />
+      ))}
+    </ul>
+  </nav>
+);
+
+TableOfContents.propTypes = TableOfContentsPropertyDefinition;
+
+export default TableOfContents;
