@@ -1,0 +1,84 @@
+@font-face {
+  font-family: "Besley Medium";
+  src: url("./static/Besley-Medium.otf") format("opentype");
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Besley Medium", serif;
+}
+
+#header {
+  margin-bottom: 1rem;
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    margin-left: 0.5rem;
+  }
+}
+
+#app-body {
+  display: flex;
+}
+
+#table-of-contents {
+  > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    > li {
+      font-size: 1.2rem;
+      margin: 0 0 1rem 0;
+
+      > .chapter-name {
+        margin: 0 0 0.5em 0;
+      }
+
+      > ul {
+        font-size: 1rem;
+        margin: 0 0 0 0.5rem;
+        padding: 0;
+        list-style-type: none;
+
+        > li {
+          margin: 0 0 0.5rem 0;
+
+          > a {
+            color: #666;
+
+            &.active {
+              color: black;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#page {
+  flex: 1;
+  padding: 0 3rem;
+
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 1.5rem 0;
+  }
+}
