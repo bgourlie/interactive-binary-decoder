@@ -2,7 +2,7 @@ import * as React from "react";
 import Chapter from "./Chapter";
 import { ChapterModel } from "../models";
 import * as PropTypes from "prop-types";
-import { css, StyleSheet } from "aphrodite/no-important";
+import { css, StyleSheet } from "../styles";
 
 interface TableOfContentsComponent {
   propTypes?: PropTypes.ValidationMap<TableOfContentsBaseProperties>;

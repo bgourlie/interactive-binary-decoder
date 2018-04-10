@@ -10,7 +10,7 @@ import PageC02S01 from "../markdown/c02_s01.md";
 import PageC02S02 from "../markdown/c02_s02.md";
 import PageC02S03 from "../markdown/c02_s03.md";
 import { ChapterModel } from "../models";
-import { css, StyleSheet } from "aphrodite/no-important";
+import { css, StyleSheet } from "../styles";
 
 const chapters: ChapterModel[] = [
   {

@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import "react";
 import { ChapterModel } from "../models";
 import { NavLink } from "react-router-dom";
-import { StyleSheet, css } from "aphrodite/no-important";
+import { css, StyleSheet } from "../styles";
 
 interface ChapterBaseProperties {
   readonly chapter: any;
