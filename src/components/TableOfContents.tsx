@@ -2,6 +2,7 @@ import * as React from "react";
 import Chapter from "./Chapter";
 import { ChapterModel } from "../models";
 import * as PropTypes from "prop-types";
+import { css, StyleSheet } from "aphrodite/no-important";
 
 interface TableOfContentsComponent {
   propTypes?: PropTypes.ValidationMap<TableOfContentsBaseProperties>;
@@ -35,11 +36,24 @@ const TableOfContentsPropertyDefinition: TableOfContentsBaseProperties = {
   )
 };
 
+const styles = StyleSheet.create({
+  root: {
+    display: "flex",
+    padding: "0 1rem",
+    borderRight: "1px solid #ccc"
+  },
+  chapterList: {
+    margin: "0",
+    padding: "0",
+    listStyleType: "none"
+  }
+});
+
 const TableOfContents: TableOfContentsComponent = (
   props: TableOfContentsProperties
 ) => (
-  <nav id="table-of-contents">
-    <ul>
+  <nav className={css(styles.root)}>
+    <ul className={css(styles.chapterList)}>
       {props.chapters.map(chapter => (
         <Chapter key={chapter.id} chapter={chapter} />
       ))}

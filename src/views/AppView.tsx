@@ -10,6 +10,7 @@ import PageC02S01 from "../markdown/c02_s01.md";
 import PageC02S02 from "../markdown/c02_s02.md";
 import PageC02S03 from "../markdown/c02_s03.md";
 import { ChapterModel } from "../models";
+import { css, StyleSheet } from "aphrodite/no-important";
 
 const chapters: ChapterModel[] = [
   {
@@ -48,19 +49,43 @@ const chapters: ChapterModel[] = [
   }
 ];
 
+const styles = StyleSheet.create({
+  appContainerInner: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  appHeader: {
+    marginBottom: "3rem"
+  },
+  pageTitle: {
+    fontSize: "1.5rem"
+  },
+  pageSubtitle: {
+    marginLeft: "0.5rem"
+  },
+  appBody: {
+    display: "flex",
+    flex: "1"
+  },
+  pageContainer: {
+    flex: "1",
+    padding: "0 3rem"
+  }
+});
+
 function AppView(): React.ReactElement<any> {
   return (
     <BrowserRouter>
-      <section id="app-container-inner">
-        <header id="header">
-          <span className="title">What the float?</span>
-          <span className="subtitle">
+      <section className={css(styles.appContainerInner)}>
+        <header className={css(styles.appHeader)}>
+          <span className={css(styles.pageTitle)}>What the float?</span>
+          <span className={css(styles.pageSubtitle)}>
             An interactive guide to floating point numbers.
           </span>
         </header>
-        <section id="app-body">
+        <section className={css(styles.appBody)}>
           <TableOfContents chapters={chapters} />
-          <section id="page">
+          <section className={css(styles.pageContainer)}>
             <Switch>
               <Route
                 exact

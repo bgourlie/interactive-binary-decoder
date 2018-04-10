@@ -1,9 +1,19 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { ValidationMap } from "prop-types";
 import "react";
-import { ChapterBaseProperties, ChapterProperties } from "../models";
+import { ChapterModel } from "../models";
 import { NavLink } from "react-router-dom";
+import { StyleSheet, css } from "aphrodite/no-important";
+
+interface ChapterBaseProperties {
+  readonly chapter: any;
+}
+
+interface ChapterProperties
+  extends ChapterBaseProperties,
+    JSX.IntrinsicAttributes {
+  readonly chapter: ChapterModel;
+}
 
 const SectionModelValidator = {
   id: PropTypes.string.isRequired,
@@ -17,7 +27,7 @@ const ChapterModelValidator = {
   sections: PropTypes.arrayOf(PropTypes.shape(SectionModelValidator))
 };
 
-const ChapterComponentPropertyDefinition: ValidationMap<
+const ChapterComponentPropertyDefinition: PropTypes.ValidationMap<
   ChapterBaseProperties
 > = {
   chapter: PropTypes.shape(ChapterModelValidator)
@@ -25,18 +35,47 @@ const ChapterComponentPropertyDefinition: ValidationMap<
 
 interface ChapterComponent {
   propTypes?: PropTypes.ValidationMap<ChapterProperties>;
-
   (props: ChapterProperties): React.ReactElement<ChapterProperties>;
 }
 
+const styles = StyleSheet.create({
+  root: {
+    fontSize: "1.1rem",
+    margin: "0 0 1rem 0"
+  },
+  chapterName: {
+    margin: "0 0 0.5em 0",
+    textDecoration: "underline"
+  },
+  sectionList: {
+    fontSize: "1rem",
+    margin: "0 0 0 0.5rem",
+    padding: "0",
+    listStyleType: "none"
+  },
+  sectionListItem: {
+    margin: "0 0 0.5rem 0"
+  },
+  sectionLink: {
+    color: "#aaa"
+  },
+  sectionActive: {
+    color: "black"
+  }
+});
+
 const Chapter: ChapterComponent = (props: ChapterProperties) => (
-  <li>
-    <header className="chapter-name">{props.chapter.name}</header>
-    <ul>
+  <li className={css(styles.root)}>
+    <header className={css(styles.chapterName)}>{props.chapter.name}</header>
+    <ul className={css(styles.sectionList)}>
       {props.chapter.sections.map(section => {
         return (
-          <li key={section.id}>
-            <NavLink activeClassName="active" exact to={section.path}>
+          <li className={css(styles.sectionListItem)} key={section.id}>
+            <NavLink
+              activeClassName={css(styles.sectionActive)}
+              exact
+              to={section.path}
+            >
               {section.name}
             </NavLink>
           </li>
