@@ -85,7 +85,7 @@ function AppView(): React.ReactElement<any> {
         </header>
         <section className={css(styles.appBody)}>
           <TableOfContents chapters={chapters} />
-          <section className={css(styles.pageContainer)}>
+          <section id="page" className={css(styles.pageContainer)}>
             <Switch>
               <Route
                 exact

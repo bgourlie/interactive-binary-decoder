@@ -5,7 +5,7 @@
     <title>What the float?</title>
     <style type="text/css">
         @font-face {
-            font-family: "Besley Medium";
+            font-family: "Besley";
             src: url("./static/Besley-Medium.otf") format("opentype");
         }
 
@@ -23,13 +23,19 @@
 
         body {
             display: flex;
-            font-family: "Besley Medium", serif;
+            font-family: "Besley", sans-serif;
             flex: 1;
         }
 
         #app-container {
             display: flex;
             flex: 1;
+        }
+
+        /* Markdown styling goes here. This is a bit of a hack. Should figure out how to do with CSS in js */
+        #page h1 {
+            font-size: 1.5em;
+            margin: 0 0 1rem 0;
         }
     </style>
 </head>
