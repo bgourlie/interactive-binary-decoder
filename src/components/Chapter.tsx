@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     color: "#aaa",
     textDecoration: "none",
     ":visited": {
-      color: "#aaa",
+      color: "#aaa"
     }
   },
   sectionActive: {

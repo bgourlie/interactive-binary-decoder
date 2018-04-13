@@ -2,6 +2,7 @@ import * as React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import RouteNotFound from "../components/RouteNotFound";
 import TableOfContents from "../components/TableOfContents";
+import BinaryNumberEncoding from "../components/BinaryNumberEncoding";
 import * as Paths from "../paths";
 import PageC01S01 from "../markdown/c01_s01.md";
 import PageC01S02 from "../markdown/c01_s02.md";
@@ -73,6 +74,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const C01_S02 = () => (
+  <div>
+    <PageC01S02 />
+    <BinaryNumberEncoding base10Digits={[0,0,8]} base2Digits={[0, 1,1,0,0,0,0, 0]} />
+  </div>
+);
+
 function AppView(): React.ReactElement<any> {
   return (
     <BrowserRouter>
@@ -95,7 +103,7 @@ function AppView(): React.ReactElement<any> {
               <Route
                 exact
                 path={Paths.CHAPTER_01_SECTION_02}
-                component={PageC01S02}
+                component={C01_S02}
               />
               <Route
                 exact
