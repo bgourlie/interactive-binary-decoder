@@ -57,10 +57,15 @@ const styles = StyleSheet.create({
     margin: "0 0 0.5rem 0"
   },
   sectionLink: {
-    color: "#aaa"
+    color: "#aaa",
+    textDecoration: "none",
+    ":visited": {
+      color: "#aaa",
+    }
   },
   sectionActive: {
-    color: "black"
+    color: "black !important",
+    transform: "translateX(1rem)"
   }
 });
 
@@ -72,6 +77,7 @@ const Chapter: ChapterComponent = (props: ChapterProperties) => (
         return (
           <li className={css(styles.sectionListItem)} key={section.id}>
             <NavLink
+              className={css(styles.sectionLink)}
               activeClassName={css(styles.sectionActive)}
               exact
               to={section.path}
