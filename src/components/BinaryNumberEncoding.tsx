@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   },
   digits: {
     display: "flex",
+    justifyContent: "right",
     flexDirection: "row",
     fontSize: "1.5rem",
     fontFamily: "monospace"

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 const C01_S02 = () => (
   <div>
     <PageC01S02 />
-    <BinaryNumberEncoding base10Digits={[0,0,8]} base2Digits={[0, 1,1,0,0,0,0, 0]} />
+    <BinaryNumberEncoding base10Digits={[0,8]} base2Digits={[0,0,0, 0]} />
   </div>
 );
 
