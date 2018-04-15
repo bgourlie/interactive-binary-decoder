@@ -25,7 +25,7 @@ interface Props {
   base10Digits: number[];
 }
 
-const BinaryNumberEncoding = (props: Props) => (
+const BinaryCounter = (props: Props) => (
   <div className={css(styles.container)}>
     <div className={css(styles.digits)}>
       {props.base2Digits.map((digit, index) => <div key={index} className={css(styles.digit)}>{digit}</div>)}
@@ -36,4 +36,4 @@ const BinaryNumberEncoding = (props: Props) => (
   </div>
 );
 
-export default BinaryNumberEncoding;
+export default BinaryCounter;
