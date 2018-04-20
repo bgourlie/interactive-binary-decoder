@@ -2,7 +2,6 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import "react";
 import { ChapterModel } from "../models";
-import { NavLink } from "react-router-dom";
 import { css, StyleSheet } from "../styles";
 
 interface ChapterBaseProperties {
@@ -15,22 +14,22 @@ interface ChapterProperties
   readonly chapter: ChapterModel;
 }
 
-const SectionModelValidator = {
+const SectionPropertiesValidator = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired
 };
 
-const ChapterModelValidator = {
+const ChapterPropertiesValidator = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  sections: PropTypes.arrayOf(PropTypes.shape(SectionModelValidator))
+  sections: PropTypes.arrayOf(PropTypes.shape(SectionPropertiesValidator)).isRequired
 };
 
 const ChapterComponentPropertyDefinition: PropTypes.ValidationMap<
   ChapterBaseProperties
 > = {
-  chapter: PropTypes.shape(ChapterModelValidator)
+  chapter: PropTypes.shape(ChapterPropertiesValidator).isRequired
 };
 
 interface ChapterComponent {
@@ -38,7 +37,7 @@ interface ChapterComponent {
   (props: ChapterProperties): React.ReactElement<ChapterProperties>;
 }
 
-const styles = StyleSheet.create({
+const chapterStyles = StyleSheet.create({
   root: {
     fontSize: "1.1rem",
     margin: "0 0 1rem 0"
@@ -70,20 +69,13 @@ const styles = StyleSheet.create({
 });
 
 const Chapter: ChapterComponent = (props: ChapterProperties) => (
-  <li className={css(styles.root)}>
-    <header className={css(styles.chapterName)}>{props.chapter.name}</header>
-    <ul className={css(styles.sectionList)}>
+  <li className={css(chapterStyles.root)}>
+    <header className={css(chapterStyles.chapterName)}>{props.chapter.name}</header>
+    <ul className={css(chapterStyles.sectionList)}>
       {props.chapter.sections.map(section => {
         return (
-          <li className={css(styles.sectionListItem)} key={section.id}>
-            <NavLink
-              className={css(styles.sectionLink)}
-              activeClassName={css(styles.sectionActive)}
-              exact
-              to={section.path}
-            >
-              {section.name}
-            </NavLink>
+          <li className={css(chapterStyles.sectionListItem)} key={section.id}>
+            <a className={css(chapterStyles.sectionLink)}>{section.name}</a>
           </li>
         );
       })}

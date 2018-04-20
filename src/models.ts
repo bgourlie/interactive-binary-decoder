@@ -1,3 +1,5 @@
+import {ApplicationPath} from "./paths";
+
 export interface ChapterModel {
   readonly id: string;
   readonly name: string;
@@ -7,5 +9,5 @@ export interface ChapterModel {
 export interface SectionModel {
   readonly id: string;
   readonly name: string;
-  readonly path: string;
+  readonly path: ApplicationPath;
 }
