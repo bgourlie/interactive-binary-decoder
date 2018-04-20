@@ -86,12 +86,11 @@ const styles = StyleSheet.create({
     listStyleType: "none",
     borderRight: "1px solid #ccc"
   },
-  chapter: {
-    fontSize: "1.1rem",
-    margin: "0 0 1rem 0"
+  chapterListItem: {
+    fontWeight: "bold",
+    margin: "0 0 0.5em 0"
   },
-  chapterName: {
-    margin: "0 0 0.5em 0",
+  selectedChapterListItem: {
     textDecoration: "underline"
   },
   sectionList: {
@@ -101,22 +100,33 @@ const styles = StyleSheet.create({
     listStyleType: "none"
   },
   sectionListItem: {
-    margin: "0 0 0.5rem 0"
+    margin: "0 0 0.5rem 0",
+    transition: "transform 100ms ease-out"
   },
   sectionLink: {
-    color: "#aaa",
-    textDecoration: "none",
-    ":visited": {
-      color: "#aaa"
-    }
+    textDecoration: "none"
   },
-  sectionActive: {
+  selectedSectionListItem: {
     color: "black !important",
-    transform: "translateX(1rem)"
+    transform: "translateX(0.5rem)"
   }
 });
 
-function onLinkClick(
+const chapterListItemClass = (isActive: boolean) => {
+  return css(
+    styles.chapterListItem,
+    isActive && styles.selectedChapterListItem
+  );
+};
+
+const sectionListItemClass = (isActive: boolean) => {
+  return css(
+    styles.sectionListItem,
+    isActive && styles.selectedSectionListItem
+  );
+};
+
+function linkClickHandler(
   e: React.MouseEvent<HTMLAnchorElement>,
   props: TableOfContentsTypedProperties,
   chapter: number,
@@ -131,26 +141,38 @@ export const TableOfContents: TableOfContentsComponent = (
 ) => (
   <nav className={css(styles.root)}>
     <ul className={css(styles.chapterList)}>
-      {chapters.map((chapter, index) => (
-        <li key={index} className={css(styles.root)}>
-          <header className={css(styles.chapterName)}>{chapter.name}</header>
-          <ul className={css(styles.sectionList)}>
-            {chapter.sections.map(section => {
-              return (
-                <li key={section.id} className={css(styles.sectionListItem)}>
-                  <a
-                    href={section.path}
-                    className={css(styles.sectionLink)}
-                    onClick={e => onLinkClick(e, props, chapter.id, section.id)}
+      {chapters.map((chapter, index) => {
+        const isCurrentChapter = props.currentChapter === chapter.id;
+        return (
+          <li key={index} className={css(styles.root)}>
+            <header className={chapterListItemClass(isCurrentChapter)}>
+              {chapter.name}
+            </header>
+            <ul className={css(styles.sectionList)}>
+              {chapter.sections.map(section => {
+                const isCurrentSection =
+                  isCurrentChapter && props.currentSection === section.id;
+                return (
+                  <li
+                    key={section.id}
+                    className={sectionListItemClass(isCurrentSection)}
                   >
-                    {section.name}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </li>
-      ))}
+                    <a
+                      href={section.path}
+                      className={css(styles.sectionLink)}
+                      onClick={e =>
+                        linkClickHandler(e, props, chapter.id, section.id)
+                      }
+                    >
+                      {section.name}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        );
+      })}
     </ul>
   </nav>
 );

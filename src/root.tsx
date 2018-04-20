@@ -29,6 +29,7 @@ const store = createStore<ApplicationState>(
   applyMiddleware(middleware)
 );
 startLocationChangeListener(history, store);
+
 const styles = StyleSheet.create({
   appContainerInner: {
     display: "flex",
