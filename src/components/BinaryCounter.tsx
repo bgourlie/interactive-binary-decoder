@@ -28,10 +28,18 @@ interface Props {
 const BinaryCounter = (props: Props) => (
   <div className={css(styles.container)}>
     <div className={css(styles.digits)}>
-      {props.base2Digits.map((digit, index) => <div key={index} className={css(styles.digit)}>{digit}</div>)}
+      {props.base2Digits.map((digit, index) => (
+        <div key={index} className={css(styles.digit)}>
+          {digit}
+        </div>
+      ))}
     </div>
     <div className={css(styles.digits)}>
-      {props.base10Digits.map((digit, index) => <div key={index} className={css(styles.digit)}>{digit}</div>)}
+      {props.base10Digits.map((digit, index) => (
+        <div key={index} className={css(styles.digit)}>
+          {digit}
+        </div>
+      ))}
     </div>
   </div>
 );
