@@ -74,32 +74,37 @@ const TableOfContentsPropertyDefinition: PropTypes.ValidationMap<
 };
 
 const styles = StyleSheet.create({
-  root: {
+  tableOfContents: {
     display: "flex",
     flexDirection: "column",
-    padding: "0 1rem"
+    fontSize: "0.8rem"
   },
-  chapterList: {
+  chapters: {
     margin: "0",
-    padding: "0",
+    padding: "0 1rem 0 0",
     height: "100%",
     listStyleType: "none",
     borderRight: "1px solid #ccc"
   },
-  chapterListItem: {
+  chapter: {
     fontWeight: "bold",
-    margin: "0 0 0.5em 0"
+    margin: "0 0 1.2rem 0",
+    opacity: "0.5",
+    transition: "opacity 100ms linear"
   },
-  selectedChapterListItem: {
+  selectedChapter: {
+    opacity: "1"
+  },
+  chapterHeader: {
+    margin: "0 0 0.5rem 0",
     textDecoration: "underline"
   },
-  sectionList: {
-    fontSize: "1rem",
+  sections: {
     margin: "0 0 0 0.5rem",
     padding: "0",
     listStyleType: "none"
   },
-  sectionListItem: {
+  section: {
     margin: "0 0 0.5rem 0",
     transition: "transform 100ms ease-out"
   },
@@ -112,18 +117,12 @@ const styles = StyleSheet.create({
   }
 });
 
-const chapterListItemClass = (isActive: boolean) => {
-  return css(
-    styles.chapterListItem,
-    isActive && styles.selectedChapterListItem
-  );
+const chapterClass = (isActive: boolean) => {
+  return css(styles.chapter, isActive && styles.selectedChapter);
 };
 
-const sectionListItemClass = (isActive: boolean) => {
-  return css(
-    styles.sectionListItem,
-    isActive && styles.selectedSectionListItem
-  );
+const sectionClass = (isActive: boolean) => {
+  return css(styles.section, isActive && styles.selectedSectionListItem);
 };
 
 function linkClickHandler(
@@ -139,23 +138,23 @@ function linkClickHandler(
 export const TableOfContents: TableOfContentsComponent = (
   props: TableOfContentsProperties
 ) => (
-  <nav className={css(styles.root)}>
-    <ul className={css(styles.chapterList)}>
+  <nav className={css(styles.tableOfContents)}>
+    <ul className={css(styles.chapters)}>
       {chapters.map((chapter, index) => {
         const isCurrentChapter = props.currentChapter === chapter.id;
         return (
-          <li key={index} className={css(styles.root)}>
-            <header className={chapterListItemClass(isCurrentChapter)}>
+          <li key={index} className={chapterClass(isCurrentChapter)}>
+            <header className={css(styles.chapterHeader)}>
               {chapter.name}
             </header>
-            <ul className={css(styles.sectionList)}>
+            <ul className={css(styles.sections)}>
               {chapter.sections.map(section => {
                 const isCurrentSection =
                   isCurrentChapter && props.currentSection === section.id;
                 return (
                   <li
                     key={section.id}
-                    className={sectionListItemClass(isCurrentSection)}
+                    className={sectionClass(isCurrentSection)}
                   >
                     <a
                       href={section.path}

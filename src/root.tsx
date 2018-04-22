@@ -3,9 +3,7 @@ import * as ReactDOM from "react-dom";
 
 import RouteNotFound from "./components/RouteNotFound";
 import { TableOfContentsContainer } from "./components/TableOfContents";
-import BinaryCounter from "./components/BinaryCounter";
 import PageC01S01 from "./markdown/c01_s01.md";
-import PageC01S02 from "./markdown/c01_s02.md";
 import PageC01S03 from "./markdown/c01_s03.md";
 import PageC02S01 from "./markdown/c02_s01.md";
 import PageC02S02 from "./markdown/c02_s02.md";
@@ -20,6 +18,7 @@ import {
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import { routerMiddleware } from "./router";
+import { C01S02 } from "./components/PageC01S02";
 
 const history = createBrowserHistory();
 const middleware = routerMiddleware(history);
@@ -54,18 +53,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const C01_S02 = () => (
-  <div>
-    <PageC01S02 />
-    <BinaryCounter base10Digits={[0, 8]} base2Digits={[0, 0, 0, 0]} />
-  </div>
-);
-
 function renderPage(state: ApplicationState) {
   if (state.selectedChapter === 1 && state.selectedSection === 1) {
     return <PageC01S01 />;
   } else if (state.selectedChapter === 1 && state.selectedSection === 2) {
-    return <C01_S02 />;
+    return <C01S02 />;
   } else if (state.selectedChapter === 1 && state.selectedSection === 3) {
     return <PageC01S03 />;
   } else if (state.selectedChapter === 2 && state.selectedSection === 1) {

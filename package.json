@@ -13,24 +13,24 @@
   "devDependencies": {
     "@types/flux": "^3.1.7",
     "@types/prop-types": "^15.5.2",
-    "@types/react": "^16.3.5",
-    "@types/react-dom": "^16.0.4",
+    "@types/react": "^16.3.12",
+    "@types/react-dom": "^16.0.5",
     "@types/react-redux": "^5.0.16",
     "@types/react-router": "^4.0.23",
     "@types/shelljs": "^0.7.8",
     "node-sass": "^4.8.3",
-    "parcel-bundler": "^1.7.0",
+    "parcel-bundler": "^1.7.1",
     "parcel-plugin-react-markdown": "0.0.1",
     "shelljs": "^0.8.1",
-    "typescript": "^2.8.1"
+    "typescript": "^2.8.3"
   },
   "dependencies": {
-    "aphrodite": "^2.1.0",
+    "aphrodite": "^2.2.0",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "prop-types": "^15.6.1",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2"
   }

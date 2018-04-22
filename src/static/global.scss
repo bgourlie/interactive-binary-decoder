@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "Besley";
+  src: url("./Besley-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Inconsolata";
+  src: url("./Inconsolata.otf") format("opentype");
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 20px;
+  height: 100%;
+  display: flex;
+}
+
+body {
+  display: flex;
+  font-family: "Besley", serif;
+  flex: 1;
+}
+
+#app-container {
+  display: flex;
+  flex: 1;
+}
+
+/* Markdown styling goes here. This is a bit of a hack. Should figure out how to do with CSS in js */
+#page {
+  line-height: 1.6;
+  h1 {
+    font-size: 1.5em;
+    margin: 0 0 1rem 0;
+  }
+}
