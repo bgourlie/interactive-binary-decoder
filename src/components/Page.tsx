@@ -36,6 +36,9 @@ export const Page: PageComponent = (props: PageTypedProperties) => (
 );
 
 Page.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ]),
   header: PropTypes.string.isRequired
 };

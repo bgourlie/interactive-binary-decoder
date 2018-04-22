@@ -75,7 +75,7 @@ function initialStateFromPath(path: string): ApplicationState {
     case Paths.CHAPTER_01_SECTION_01:
       return { selectedChapter: 1, selectedSection: 1 };
     case Paths.CHAPTER_01_SECTION_02:
-      return { selectedChapter: 1, selectedSection: 2, figure1Value: 255 };
+      return { selectedChapter: 1, selectedSection: 2, figure1Value: 3 };
     case Paths.CHAPTER_01_SECTION_03:
       return { selectedChapter: 1, selectedSection: 3 };
     case Paths.CHAPTER_02_SECTION_01:
@@ -108,7 +108,7 @@ export const appReducer = (
     case FIGURE_1_VALUE_CHANGE:
       if (state.selectedChapter == 1 && state.selectedSection == 2) {
         const newValue =
-          state.figure1Value === 0 ? 254 : state.figure1Value - 1;
+          state.figure1Value === 0 ? 255 : state.figure1Value - 1;
         return { ...state, figure1Value: newValue };
       } else {
         return state;
