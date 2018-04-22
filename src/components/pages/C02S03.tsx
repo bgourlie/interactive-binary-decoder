@@ -1,8 +1,8 @@
 import * as React from "react";
+import { Page } from "../Page";
 
 export const C02S03 = () => (
-  <div>
-    <h1>The Mantissa Bits</h1>
+  <Page header={"The Mantissa Bits"}>
     <p>TODO</p>
-  </div>
+  </Page>
 );

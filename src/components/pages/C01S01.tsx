@@ -1,8 +1,8 @@
 import * as React from "react";
+import { Page } from "../Page";
 
 export const C01S01 = () => (
-  <div>
-    <h1>Welcome!</h1>
+  <Page header={"Welcome!"}>
     <p>
       The purpose of this guide is to foster an intuitive understanding of how
       floating point numbers work. If you're looking for formal definitions and
@@ -10,5 +10,5 @@ export const C01S01 = () => (
       need to know these things to understand how and why floats differ from
       integer types, and why they sometimes behave in unexpected ways.
     </p>
-  </div>
+  </Page>
 );

@@ -9,13 +9,13 @@ interface FigureComponent {
 }
 
 interface FigureProperties extends JSX.IntrinsicAttributes {
-  readonly label: any;
+  readonly number: any;
   readonly description: any;
   readonly children: any;
 }
 
 interface FigureTypedProperties extends FigureProperties {
-  readonly label: string;
+  readonly number: number;
   readonly description: string;
   readonly children: JSX.Element;
 }
@@ -50,7 +50,7 @@ export const Figure: FigureComponent = (props: FigureTypedProperties) => (
     <div className={css(styles.figureInner)}>
       <div className={css(styles.childrenContainer)}>{props.children}</div>
       <div className={css(styles.figureText)}>
-        <span className={css(styles.label)}>{props.label}</span>
+        <span className={css(styles.label)}>Figure {props.number}.</span>
         <span className={css(styles.description)}>{props.description}</span>
       </div>
     </div>
@@ -58,7 +58,7 @@ export const Figure: FigureComponent = (props: FigureTypedProperties) => (
 );
 
 Figure.propTypes = {
-  label: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   children: PropTypes.array
 };

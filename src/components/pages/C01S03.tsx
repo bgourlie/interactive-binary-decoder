@@ -1,8 +1,8 @@
 import * as React from "react";
+import { Page } from "../Page";
 
 export const C01S03 = () => (
-  <div>
-    <h1>Integer Formats</h1>
+  <Page header={"Integer Formats"}>
     <p>TODO</p>
-  </div>
+  </Page>
 );

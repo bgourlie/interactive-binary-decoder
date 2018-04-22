@@ -14,11 +14,11 @@ import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import { routerMiddleware } from "./router";
 import { C01S02 } from "./components/pages/C01S02";
-import {C02S03} from "./components/pages/C02S03";
-import {C02S02} from "./components/pages/C02S02";
-import {C02S01} from "./components/pages/C02S01";
-import {C01S03} from "./components/pages/C01S03";
-import {C01S01} from "./components/pages/C01S01";
+import { C02S03 } from "./components/pages/C02S03";
+import { C02S02 } from "./components/pages/C02S02";
+import { C02S01 } from "./components/pages/C02S01";
+import { C01S03 } from "./components/pages/C01S03";
+import { C01S01 } from "./components/pages/C01S01";
 
 const history = createBrowserHistory();
 const middleware = routerMiddleware(history);

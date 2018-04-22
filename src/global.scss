@@ -37,12 +37,3 @@ body {
   display: flex;
   flex: 1;
 }
-
-/* Markdown styling goes here. This is a bit of a hack. Should figure out how to do with CSS in js */
-#page {
-  line-height: 1.6;
-  h1 {
-    font-size: 1.5em;
-    margin: 0 0 1rem 0;
-  }
-}
