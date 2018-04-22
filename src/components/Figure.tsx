@@ -34,8 +34,14 @@ const styles = StyleSheet.create({
   childrenContainer: {
     padding: "0 0 0.5rem 0"
   },
-  figureLabel: {
+  figureText: {
     fontSize: "0.8rem"
+  },
+  label: {
+    fontWeight: "bold"
+  },
+  description: {
+    paddingLeft: "0.5rem"
   }
 });
 
@@ -43,9 +49,9 @@ export const Figure: FigureComponent = (props: FigureTypedProperties) => (
   <section className={css(styles.figure)}>
     <div className={css(styles.figureInner)}>
       <div className={css(styles.childrenContainer)}>{props.children}</div>
-      <div className={css(styles.figureLabel)}>
-        <span>{props.label}</span>
-        <span>{props.description}</span>
+      <div className={css(styles.figureText)}>
+        <span className={css(styles.label)}>{props.label}</span>
+        <span className={css(styles.description)}>{props.description}</span>
       </div>
     </div>
   </section>
