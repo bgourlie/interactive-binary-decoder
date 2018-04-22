@@ -60,7 +60,6 @@ const mapStateToProps = (state: ApplicationState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-  console.log("mapDispatchToProps");
   return {
     doDecrementFigure1Value: () => dispatch(decrementFigure1Value())
   };
