@@ -3,11 +3,6 @@ import * as ReactDOM from "react-dom";
 
 import RouteNotFound from "./components/RouteNotFound";
 import { TableOfContentsContainer } from "./components/TableOfContents";
-import PageC01S01 from "./markdown/c01_s01.md";
-import PageC01S03 from "./markdown/c01_s03.md";
-import PageC02S01 from "./markdown/c02_s01.md";
-import PageC02S02 from "./markdown/c02_s02.md";
-import PageC02S03 from "./markdown/c02_s03.md";
 import { css, StyleSheet } from "./styles";
 import createBrowserHistory from "history/createBrowserHistory";
 import {
@@ -18,7 +13,12 @@ import {
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import { routerMiddleware } from "./router";
-import { C01S02 } from "./components/PageC01S02";
+import { C01S02 } from "./components/pages/C01S02";
+import {C02S03} from "./components/pages/C02S03";
+import {C02S02} from "./components/pages/C02S02";
+import {C02S01} from "./components/pages/C02S01";
+import {C01S03} from "./components/pages/C01S03";
+import {C01S01} from "./components/pages/C01S01";
 
 const history = createBrowserHistory();
 const middleware = routerMiddleware(history);
@@ -55,17 +55,17 @@ const styles = StyleSheet.create({
 
 function renderPage(state: ApplicationState) {
   if (state.selectedChapter === 1 && state.selectedSection === 1) {
-    return <PageC01S01 />;
+    return <C01S01 />;
   } else if (state.selectedChapter === 1 && state.selectedSection === 2) {
     return <C01S02 />;
   } else if (state.selectedChapter === 1 && state.selectedSection === 3) {
-    return <PageC01S03 />;
+    return <C01S03 />;
   } else if (state.selectedChapter === 2 && state.selectedSection === 1) {
-    return <PageC02S01 />;
+    return <C02S01 />;
   } else if (state.selectedChapter === 2 && state.selectedSection === 2) {
-    return <PageC02S02 />;
+    return <C02S02 />;
   } else if (state.selectedChapter === 2 && state.selectedSection === 3) {
-    return <PageC02S03 />;
+    return <C02S03 />;
   } else {
     return <RouteNotFound />;
   }
