@@ -33,7 +33,7 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
         </p>
         <Figure
           number={1}
-          description={"A base 10 number and its base 2 equivalent"}
+          description={"A base 10 number and its binary equivalent"}
         >
           <BinaryCounter value={this.props.figure1Value} />
         </Figure>
@@ -42,7 +42,6 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
   }
 
   componentDidMount() {
-    console.log(this.timerId);
     if (this.timerId === null) {
       this.timerId = window.setInterval(
         () => this.props.doDecrementFigure1Value(),
