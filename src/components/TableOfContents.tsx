@@ -48,7 +48,7 @@ const chapters: ChapterModel[] = [
 interface TableOfContentsComponent {
   propTypes?: PropTypes.ValidationMap<TableOfContentsProperties>;
 
-  (props: TableOfContentsProperties): React.ReactElement<
+  (props: TableOfContentsTypedProperties): React.ReactElement<
     TableOfContentsTypedProperties
   >;
 }
@@ -64,14 +64,6 @@ interface TableOfContentsTypedProperties extends TableOfContentsProperties {
   readonly currentSection: number;
   readonly doSectionChange: (chapter: number, section: number) => any;
 }
-
-const TableOfContentsPropertyDefinition: PropTypes.ValidationMap<
-  TableOfContentsProperties
-> = {
-  currentChapter: PropTypes.number.isRequired,
-  currentSection: PropTypes.number.isRequired,
-  doSectionChange: PropTypes.func.isRequired
-};
 
 const styles = StyleSheet.create({
   tableOfContents: {
@@ -136,7 +128,7 @@ function linkClickHandler(
 }
 
 export const TableOfContents: TableOfContentsComponent = (
-  props: TableOfContentsProperties
+  props: TableOfContentsTypedProperties
 ) => (
   <nav className={css(styles.tableOfContents)}>
     <ul className={css(styles.chapters)}>
@@ -176,7 +168,11 @@ export const TableOfContents: TableOfContentsComponent = (
   </nav>
 );
 
-TableOfContents.propTypes = TableOfContentsPropertyDefinition;
+TableOfContents.propTypes = {
+  currentChapter: PropTypes.number.isRequired,
+  currentSection: PropTypes.number.isRequired,
+  doSectionChange: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state: ApplicationState) => ({
   currentChapter: state.selectedChapter,

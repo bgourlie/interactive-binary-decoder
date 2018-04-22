@@ -6,7 +6,7 @@ import BinaryCounter from "./BinaryCounter";
 export const C01S02 = () => (
   <div>
     <PageC01S02 />
-    <Figure>
+    <Figure label={"figure 1"} description={"Something"}>
       <BinaryCounter value={0} />
     </Figure>
   </div>

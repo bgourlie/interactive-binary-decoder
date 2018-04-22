@@ -1,6 +1,5 @@
 import * as React from "react";
 import { StyleSheet, css, globalStyles } from "../styles";
-import { base2Digits } from "../binaryUtils";
 
 const styles = StyleSheet.create({
   binaryCounter: {

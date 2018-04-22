@@ -1,11 +1,18 @@
 @font-face {
   font-family: "Besley";
-  src: url("./Besley-Medium.otf") format("opentype");
+  src: url("./static/Besley-Medium.otf") format("opentype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Besley";
+  src: url("./static/Besley-Bold.otf") format("opentype");
+  font-weight: bold;
 }
 
 @font-face {
   font-family: "Inconsolata";
-  src: url("./Inconsolata.otf") format("opentype");
+  src: url("./static/Inconsolata.otf") format("opentype");
 }
 
 *,
