@@ -17,7 +17,7 @@ interface FigureProperties extends JSX.IntrinsicAttributes {
 interface FigureTypedProperties extends FigureProperties {
   readonly number: number;
   readonly description: string;
-  readonly children: JSX.Element;
+  readonly children: JSX.Element | JSX.Element;
 }
 
 const styles = StyleSheet.create({
@@ -60,5 +60,5 @@ export const Figure: FigureComponent = (props: FigureTypedProperties) => (
 Figure.propTypes = {
   number: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
-  children: PropTypes.array
+  children: PropTypes.any
 };

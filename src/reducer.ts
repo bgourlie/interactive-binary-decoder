@@ -2,7 +2,8 @@ import { History } from "history";
 import { Reducer, Store } from "redux";
 import * as Paths from "./paths";
 
-const LOCATION_CHANGE = "ROUTER/LOCATION_CHANGE";
+const LOCATION_CHANGE = "LOCATION_CHANGE";
+const FIGURE_1_VALUE_CHANGE = "FIGURE_1_VALUE_CHANGE";
 
 interface Chapter01Section01State {
   readonly selectedChapter: 1;
@@ -12,6 +13,7 @@ interface Chapter01Section01State {
 interface Chapter01Section02State {
   readonly selectedChapter: 1;
   readonly selectedSection: 2;
+  readonly figure1Value: number;
 }
 
 interface Chapter01Section03State {
@@ -53,32 +55,37 @@ export interface LocationChangeAction {
   readonly path: string;
 }
 
-type Action = LocationChangeAction;
+export interface Figure1ValueChangeAction {
+  readonly type: typeof FIGURE_1_VALUE_CHANGE;
+}
+
+type Action = LocationChangeAction | Figure1ValueChangeAction;
 
 const locationChange = (url: string): LocationChangeAction => ({
   type: LOCATION_CHANGE,
   path: url
 });
 
-function newStateFromPath(
-  oldState: ApplicationState,
-  path: string
-): ApplicationState {
+export const decrementFigure1Value = (): Figure1ValueChangeAction => ({
+  type: FIGURE_1_VALUE_CHANGE
+});
+
+function initialStateFromPath(path: string): ApplicationState {
   switch (path) {
     case Paths.CHAPTER_01_SECTION_01:
-      return { ...oldState, selectedChapter: 1, selectedSection: 1 };
+      return { selectedChapter: 1, selectedSection: 1 };
     case Paths.CHAPTER_01_SECTION_02:
-      return { ...oldState, selectedChapter: 1, selectedSection: 2 };
+      return { selectedChapter: 1, selectedSection: 2, figure1Value: 255 };
     case Paths.CHAPTER_01_SECTION_03:
-      return { ...oldState, selectedChapter: 1, selectedSection: 3 };
+      return { selectedChapter: 1, selectedSection: 3 };
     case Paths.CHAPTER_02_SECTION_01:
-      return { ...oldState, selectedChapter: 2, selectedSection: 1 };
+      return { selectedChapter: 2, selectedSection: 1 };
     case Paths.CHAPTER_02_SECTION_02:
-      return { ...oldState, selectedChapter: 2, selectedSection: 2 };
+      return { selectedChapter: 2, selectedSection: 2 };
     case Paths.CHAPTER_02_SECTION_03:
-      return { ...oldState, selectedChapter: 2, selectedSection: 3 };
+      return { selectedChapter: 2, selectedSection: 3 };
     default:
-      return { ...oldState, selectedChapter: -1, selectedSection: -1 };
+      return { selectedChapter: -1, selectedSection: -1 };
   }
 }
 
@@ -96,7 +103,16 @@ export const appReducer = (
   state = state || { selectedChapter: 1, selectedSection: 1 };
   switch (action.type) {
     case LOCATION_CHANGE:
-      return newStateFromPath(state, action.path);
+      return initialStateFromPath(action.path);
+
+    case FIGURE_1_VALUE_CHANGE:
+      if (state.selectedChapter == 1 && state.selectedSection == 2) {
+        const newValue =
+          state.figure1Value === 0 ? 254 : state.figure1Value - 1;
+        return { ...state, figure1Value: newValue };
+      } else {
+        return state;
+      }
 
     default:
       return state;

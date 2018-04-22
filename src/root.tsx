@@ -13,7 +13,7 @@ import {
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import { routerMiddleware } from "./router";
-import { C01S02 } from "./components/pages/C01S02";
+import { C01S02, C01S02Container } from "./components/pages/C01S02";
 import { C02S03 } from "./components/pages/C02S03";
 import { C02S02 } from "./components/pages/C02S02";
 import { C02S01 } from "./components/pages/C02S01";
@@ -57,7 +57,7 @@ function renderPage(state: ApplicationState) {
   if (state.selectedChapter === 1 && state.selectedSection === 1) {
     return <C01S01 />;
   } else if (state.selectedChapter === 1 && state.selectedSection === 2) {
-    return <C01S02 />;
+    return <C01S02Container />;
   } else if (state.selectedChapter === 1 && state.selectedSection === 3) {
     return <C01S03 />;
   } else if (state.selectedChapter === 2 && state.selectedSection === 1) {

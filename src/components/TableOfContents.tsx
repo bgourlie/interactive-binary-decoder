@@ -62,7 +62,7 @@ interface TableOfContentsProperties extends JSX.IntrinsicAttributes {
 interface TableOfContentsTypedProperties extends TableOfContentsProperties {
   readonly currentChapter: number;
   readonly currentSection: number;
-  readonly doSectionChange: (chapter: number, section: number) => any;
+  readonly doSectionChange: (chapter: number, section: number) => void;
 }
 
 const styles = StyleSheet.create({
