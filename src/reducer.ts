@@ -3,40 +3,42 @@ import { Store } from "redux";
 import * as Paths from "./paths";
 
 const LOCATION_CHANGE = "LOCATION_CHANGE";
-const FIGURE_1_VALUE_CHANGE = "FIGURE_1_VALUE_CHANGE";
+const FIGURE_1_UPDATE_VALUE = "FIGURE_1_UPDATE_VALUE";
+const FIGURE_1_TOGGLE_PLAY = "FIGURE_1_TOGGLE_PLAY";
 
-interface Chapter01Section01State {
+export interface Chapter01Section01State {
   readonly selectedChapter: 1;
   readonly selectedSection: 1;
 }
 
-interface Chapter01Section02State {
+export interface Chapter01Section02State {
   readonly selectedChapter: 1;
   readonly selectedSection: 2;
   readonly figure1Value: number;
+  readonly figure1Playing: boolean;
 }
 
-interface Chapter01Section03State {
+export interface Chapter01Section03State {
   readonly selectedChapter: 1;
   readonly selectedSection: 3;
 }
 
-interface Chapter02Section01State {
+export interface Chapter02Section01State {
   readonly selectedChapter: 2;
   readonly selectedSection: 1;
 }
 
-interface Chapter02Section02State {
+export interface Chapter02Section02State {
   readonly selectedChapter: 2;
   readonly selectedSection: 2;
 }
 
-interface Chapter02Section03State {
+export interface Chapter02Section03State {
   readonly selectedChapter: 2;
   readonly selectedSection: 3;
 }
 
-interface NotFoundState {
+export interface NotFoundState {
   readonly selectedChapter: -1;
   readonly selectedSection: -1;
 }
@@ -55,19 +57,37 @@ export interface LocationChangeAction {
   readonly path: string;
 }
 
-export interface Figure1ValueChangeAction {
-  readonly type: typeof FIGURE_1_VALUE_CHANGE;
+export interface Figure1UpdateValueAction {
+  readonly type: typeof FIGURE_1_UPDATE_VALUE;
+  readonly value: number;
+  readonly pause: boolean;
 }
 
-type Action = LocationChangeAction | Figure1ValueChangeAction;
+export interface Figure1TogglePlayAction {
+  readonly type: typeof FIGURE_1_TOGGLE_PLAY;
+}
+
+type Action =
+  | LocationChangeAction
+  | Figure1UpdateValueAction
+  | Figure1TogglePlayAction;
 
 const locationChange = (url: string): LocationChangeAction => ({
   type: LOCATION_CHANGE,
   path: url
 });
 
-export const incrementFigure1Value = (): Figure1ValueChangeAction => ({
-  type: FIGURE_1_VALUE_CHANGE
+export const figure1UpdateValue = (
+  value: number,
+  pause: boolean
+): Figure1UpdateValueAction => ({
+  type: FIGURE_1_UPDATE_VALUE,
+  value: value,
+  pause: pause
+});
+
+export const figure1TogglePlay = (): Figure1TogglePlayAction => ({
+  type: FIGURE_1_TOGGLE_PLAY
 });
 
 function initialStateFromPath(path: string): ApplicationState {
@@ -75,7 +95,12 @@ function initialStateFromPath(path: string): ApplicationState {
     case Paths.CHAPTER_01_SECTION_01:
       return { selectedChapter: 1, selectedSection: 1 };
     case Paths.CHAPTER_01_SECTION_02:
-      return { selectedChapter: 1, selectedSection: 2, figure1Value: 0 };
+      return {
+        selectedChapter: 1,
+        selectedSection: 2,
+        figure1Value: 0,
+        figure1Playing: true
+      };
     case Paths.CHAPTER_01_SECTION_03:
       return { selectedChapter: 1, selectedSection: 3 };
     case Paths.CHAPTER_02_SECTION_01:
@@ -96,6 +121,17 @@ export function startLocationChangeListener(history: History, store: Store) {
   history.listen(location => store.dispatch(locationChange(location.pathname)));
 }
 
+function C01S02Guard(
+  state: ApplicationState,
+  callback: (chapterState: Chapter01Section02State) => ApplicationState
+) {
+  if (state.selectedChapter === 1 && state.selectedSection === 2) {
+    return callback(state);
+  }
+
+  return state;
+}
+
 export const appReducer = (
   state: ApplicationState,
   action: Action
@@ -105,14 +141,30 @@ export const appReducer = (
     case LOCATION_CHANGE:
       return initialStateFromPath(action.path);
 
-    case FIGURE_1_VALUE_CHANGE:
-      if (state.selectedChapter == 1 && state.selectedSection == 2) {
-        const newValue =
-          state.figure1Value === 255 ? 0 : state.figure1Value + 1;
-        return { ...state, figure1Value: newValue };
-      } else {
-        return state;
-      }
+    case FIGURE_1_UPDATE_VALUE:
+      return C01S02Guard(state, chapterState => {
+        let newValue: number;
+        if (action.value > 255) {
+          newValue = 0;
+        } else if (action.value < 0) {
+          newValue = 255;
+        } else {
+          newValue = action.value;
+        }
+        return {
+          ...chapterState,
+          figure1Value: newValue,
+          figure1Playing: !action.pause
+        };
+      });
+
+    case FIGURE_1_TOGGLE_PLAY:
+      return C01S02Guard(state, chapterState => {
+        return {
+          ...chapterState,
+          figure1Playing: !chapterState.figure1Playing
+        };
+      });
 
     default:
       return state;

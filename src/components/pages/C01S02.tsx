@@ -3,19 +3,27 @@ import * as PropTypes from "prop-types";
 import { Figure } from "../Figure";
 import BinaryCounter from "../BinaryCounter";
 import { Page } from "../Page";
-import { ApplicationState, incrementFigure1Value } from "../../reducer";
+import {
+  Chapter01Section02State,
+  figure1TogglePlay,
+  figure1UpdateValue
+} from "../../reducer";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { PageHeader } from "../PageHeader";
 
 interface C01S02Properties extends JSX.IntrinsicAttributes {
   readonly figure1Value: any;
-  readonly doIncrementFigure1Value: any;
+  readonly figure1Playing: any;
+  readonly doFigure1UpdateValue: any;
+  readonly doFigure1TogglePlay: any;
 }
 
 interface C01S02TypedProperties extends C01S02Properties {
   readonly figure1Value: number;
-  readonly doIncrementFigure1Value: () => void;
+  readonly figure1Playing: boolean;
+  readonly doFigure1UpdateValue: (value: number, pause: boolean) => void;
+  readonly doFigure1TogglePlay: () => void;
 }
 
 export class C01S02 extends React.Component<C01S02TypedProperties> {
@@ -35,14 +43,14 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
 
         <h3>A Quick Look at Number Systems</h3>
         <p>
-          Humans are taught to think in terms of the base-10 number system,
-          where a single digit can have 10 distinct values, 0 through 9. When we
-          need to represent a number greater than that which can be represented
-          by a single digit, we introduce a new digit with a value of one, and
-          reset the original digit to zero. Once we need to represent a number
-          greater than that which can be represented by two digits, we introduce
-          a third digit with a value of one and reset all previous digits to
-          zero, and so on.
+          Humans are taught to think in terms of a base-10 number system, where
+          a single digit has 10 distinct values, 0 through 9. When we need to
+          represent a number greater than that which can be represented by a
+          single digit, we introduce a new digit with a value of one, and reset
+          the original digit to zero. Once we need to represent a number greater
+          than that which can be represented by two digits, we introduce a third
+          digit with a value of one and reset all previous digits to zero, and
+          so on.
         </p>
         <p>
           Any given number system requires at least two distinct values: A value
@@ -63,7 +71,14 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
           number={1}
           description={"A base 10 number and its binary equivalent"}
         >
-          <BinaryCounter value={this.props.figure1Value} />
+          <BinaryCounter
+            value={this.props.figure1Value}
+            playing={this.props.figure1Playing}
+            doTogglePlay={this.props.doFigure1TogglePlay}
+            doUpdateValue={(value: number) =>
+              this.props.doFigure1UpdateValue(value, true)
+            }
+          />
         </Figure>
         <p>
           Since we're used to interpreting numbers in base-10, we have an
@@ -79,10 +94,11 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
 
   componentDidMount() {
     if (this.timerId === null) {
-      this.timerId = window.setInterval(
-        () => this.props.doIncrementFigure1Value(),
-        2000
-      );
+      this.timerId = window.setInterval(() => {
+        if (this.props.figure1Playing) {
+          this.props.doFigure1UpdateValue(this.props.figure1Value + 1, false);
+        }
+      }, 500);
     }
   }
 
@@ -96,24 +112,24 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
   static get propTypes(): React.ValidationMap<C01S02Properties> {
     return {
       figure1Value: PropTypes.number.isRequired,
-      doIncrementFigure1Value: PropTypes.func.isRequired
+      doFigure1UpdateValue: PropTypes.func.isRequired,
+      doFigure1TogglePlay: PropTypes.func.isRequired
     };
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => {
-  const figure1Value =
-    state.selectedChapter === 1 && state.selectedSection === 2
-      ? state.figure1Value
-      : 255;
+const mapStateToProps = (state: Chapter01Section02State) => {
   return {
-    figure1Value: figure1Value
+    figure1Value: state.figure1Value,
+    figure1Playing: state.figure1Playing
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    doIncrementFigure1Value: () => dispatch(incrementFigure1Value())
+    doFigure1UpdateValue: (value: number, pause: boolean) =>
+      dispatch(figure1UpdateValue(value, pause)),
+    doFigure1TogglePlay: () => dispatch(figure1TogglePlay())
   };
 };
 

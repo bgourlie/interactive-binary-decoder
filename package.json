@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "An interactive guide to floating point numbers",
   "scripts": {
-    "dev": "parcel ./src/root.html",
+    "dev": "parcel ./src/root.html --no-hmr",
     "dev-debug": "node %NODE_DEBUG_OPTION% ./node_modules/parcel-bundler/bin/cli.js ./src/root.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
