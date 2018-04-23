@@ -9,16 +9,15 @@ interface PageComponent {
 
 interface PageProperties extends JSX.IntrinsicAttributes {
   readonly children: any;
-  readonly header: any;
 }
 
 interface PageTypedProperties extends PageProperties {
   readonly children: JSX.Element | JSX.Element[];
-  readonly header: string;
 }
 
 const styles = StyleSheet.create({
   page: {
+    width: "50rem",
     lineHeight: "1.6rem"
   },
   header: {
@@ -29,16 +28,12 @@ const styles = StyleSheet.create({
 });
 
 export const Page: PageComponent = (props: PageTypedProperties) => (
-  <div className={css(styles.page)}>
-    <h1 className={css(styles.header)}>{props.header}</h1>
-    {props.children}
-  </div>
+  <div className={css(styles.page)}>{props.children}</div>
 );
 
 Page.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element)
-  ]),
-  header: PropTypes.string.isRequired
+  ])
 };

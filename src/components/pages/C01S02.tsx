@@ -3,18 +3,19 @@ import * as PropTypes from "prop-types";
 import { Figure } from "../Figure";
 import BinaryCounter from "../BinaryCounter";
 import { Page } from "../Page";
-import { ApplicationState, decrementFigure1Value } from "../../reducer";
+import { ApplicationState, incrementFigure1Value } from "../../reducer";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import { PageHeader } from "../PageHeader";
 
 interface C01S02Properties extends JSX.IntrinsicAttributes {
   readonly figure1Value: any;
-  readonly doDecrementFigure1Value: any;
+  readonly doIncrementFigure1Value: any;
 }
 
 interface C01S02TypedProperties extends C01S02Properties {
   readonly figure1Value: number;
-  readonly doDecrementFigure1Value: () => void;
+  readonly doIncrementFigure1Value: () => void;
 }
 
 export class C01S02 extends React.Component<C01S02TypedProperties> {
@@ -22,14 +23,41 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
 
   render(): React.ReactNode {
     return (
-      <Page header={"Representing Numbers in Binary"}>
+      <Page>
+        <PageHeader>Representing Numbers in Binary</PageHeader>
         <p>
-          Few things are naturally represented in binary, and numbers are one of
-          those things. We really only need to make one small tweak in our
-          natural way of thinking to understand how numbers are encoded in
-          binary: We need to think of numbers in terms of two symbols as opposed
-          to 10. In other words, we need to learn to think in a base 2 number
-          system instead of base 10.
+          Representing numbers in binary is extremely straightforward and
+          intuitive. While it may not seem like it at first, once we start
+          thinking of numbers in abstract terms, we'll see that numbers
+          represented in binary are really no different than numbers as we
+          normally think of them, they just look a bit different.
+        </p>
+
+        <h3>A Quick Look at Number Systems</h3>
+        <p>
+          Humans are taught to think in terms of the base-10 number system,
+          where a single digit can have 10 distinct values, 0 through 9. When we
+          need to represent a number greater than that which can be represented
+          by a single digit, we introduce a new digit with a value of one, and
+          reset the original digit to zero. Once we need to represent a number
+          greater than that which can be represented by two digits, we introduce
+          a third digit with a value of one and reset all previous digits to
+          zero, and so on.
+        </p>
+        <p>
+          Any given number system requires at least two distinct values: A value
+          to represent zero, and a value to represent one. This means that
+          binary data meets the minimum requirement to represent <i>any</i>&nbsp;number.
+          Unlike a base-10 number system where a single digit has 10 distinct
+          values, a single digit in binary has 2 distinct values, 0 and 1. In
+          other words, we can interpret binary data as numbers using a base-2
+          number system.
+        </p>
+        <p>
+          As you can see in Figure 1 below, the same general rules apply to
+          counting in a base-2 number system as they do in a base-10 number
+          system. The only difference is the number of digits required to
+          represent the same number.
         </p>
         <Figure
           number={1}
@@ -37,6 +65,14 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
         >
           <BinaryCounter value={this.props.figure1Value} />
         </Figure>
+        <p>
+          Since we're used to interpreting numbers in base-10, we have an
+          intuitive understanding of a base-10 number's magnitude. For example,
+          we can tell at a glance that 1,000,000 would be a lot in terms of
+          dollars, but what if we interpreted those same digits as binary? It
+          turns out those same digits represent a much smaller number in
+          binary&mdash;64 to be exact.
+        </p>
       </Page>
     );
   }
@@ -44,8 +80,8 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
   componentDidMount() {
     if (this.timerId === null) {
       this.timerId = window.setInterval(
-        () => this.props.doDecrementFigure1Value(),
-        1000
+        () => this.props.doIncrementFigure1Value(),
+        2000
       );
     }
   }
@@ -60,7 +96,7 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
   static get propTypes(): React.ValidationMap<C01S02Properties> {
     return {
       figure1Value: PropTypes.number.isRequired,
-      doDecrementFigure1Value: PropTypes.func.isRequired
+      doIncrementFigure1Value: PropTypes.func.isRequired
     };
   }
 }
@@ -77,7 +113,7 @@ const mapStateToProps = (state: ApplicationState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    doDecrementFigure1Value: () => dispatch(decrementFigure1Value())
+    doIncrementFigure1Value: () => dispatch(incrementFigure1Value())
   };
 };
 

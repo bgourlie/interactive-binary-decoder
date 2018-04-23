@@ -1,8 +1,10 @@
 import * as React from "react";
 import { Page } from "../Page";
+import { PageHeader } from "../PageHeader";
 
 export const C01S01 = () => (
-  <Page header={"Welcome!"}>
+  <Page>
+    <PageHeader>Welcome!</PageHeader>
     <p>
       The purpose of this guide is to foster an intuitive understanding of how
       floating point numbers work. If you're looking for formal definitions and

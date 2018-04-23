@@ -1,5 +1,5 @@
 import { History } from "history";
-import { Reducer, Store } from "redux";
+import { Store } from "redux";
 import * as Paths from "./paths";
 
 const LOCATION_CHANGE = "LOCATION_CHANGE";
@@ -66,7 +66,7 @@ const locationChange = (url: string): LocationChangeAction => ({
   path: url
 });
 
-export const decrementFigure1Value = (): Figure1ValueChangeAction => ({
+export const incrementFigure1Value = (): Figure1ValueChangeAction => ({
   type: FIGURE_1_VALUE_CHANGE
 });
 
@@ -75,7 +75,7 @@ function initialStateFromPath(path: string): ApplicationState {
     case Paths.CHAPTER_01_SECTION_01:
       return { selectedChapter: 1, selectedSection: 1 };
     case Paths.CHAPTER_01_SECTION_02:
-      return { selectedChapter: 1, selectedSection: 2, figure1Value: 3 };
+      return { selectedChapter: 1, selectedSection: 2, figure1Value: 0 };
     case Paths.CHAPTER_01_SECTION_03:
       return { selectedChapter: 1, selectedSection: 3 };
     case Paths.CHAPTER_02_SECTION_01:
@@ -99,7 +99,7 @@ export function startLocationChangeListener(history: History, store: Store) {
 export const appReducer = (
   state: ApplicationState,
   action: Action
-): Reducer<ApplicationState> => {
+): ApplicationState => {
   state = state || { selectedChapter: 1, selectedSection: 1 };
   switch (action.type) {
     case LOCATION_CHANGE:
@@ -108,7 +108,7 @@ export const appReducer = (
     case FIGURE_1_VALUE_CHANGE:
       if (state.selectedChapter == 1 && state.selectedSection == 2) {
         const newValue =
-          state.figure1Value === 0 ? 255 : state.figure1Value - 1;
+          state.figure1Value === 255 ? 0 : state.figure1Value + 1;
         return { ...state, figure1Value: newValue };
       } else {
         return state;
