@@ -50,7 +50,7 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
           binary data meets the minimum requirement to represent <i>any</i>&nbsp;number.
           Unlike a base-10 number system where a single digit has 10 distinct
           values, a single digit in binary has 2 distinct values, 0 and 1. In
-          other words, we can interpret binary data as numbers using a base-2
+          other words, we can interpret binary data as a number using a base-2
           number system.
         </p>
         <p>
