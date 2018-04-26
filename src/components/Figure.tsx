@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { StyleSheet, css } from "../styles";
+import {StyleSheet, css} from "../styles";
 
 interface FigureComponent {
   propTypes?: PropTypes.ValidationMap<FigureProperties>;

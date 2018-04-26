@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { StyleSheet, css, globalStyles, iconClass } from "../styles";
+import {StyleSheet, css, globalStyles, iconClass} from "../styles";
 
 const styles = StyleSheet.create({
   binaryCounter: {
@@ -22,25 +22,11 @@ const styles = StyleSheet.create({
   },
   hideDigit: {
     transform: "scaleY(0)"
-  },
-  icon: {
-    padding: "0 0.25rem"
-  },
-  icons: {
-    display: "flex",
-    justifyContent: "flex-end",
-    padding: "0 0.25rem 0.25rem 0.25rem"
-  },
-  iconGroup: {
-    display: "flex"
   }
 });
 
 interface TypedProps {
   readonly value: number;
-  readonly playing: boolean;
-  readonly doUpdateValue: (value: number) => void;
-  readonly doTogglePlay: () => void;
 }
 
 const digitClass = (hideDigit: boolean) => {
@@ -68,33 +54,6 @@ class BinaryCounter extends React.Component<TypedProps> {
     return (
       <div className={css(styles.binaryCounter)}>
         <div className={css(styles.digitsContainer)}>
-          <div className={css(styles.icons)}>
-            <div className={css(styles.iconGroup)}>
-              <div className={css(styles.icon)}>
-                <span className={iconClass("first")} />
-              </div>
-              <div className={css(styles.icon)}>
-                <span className={iconClass("pause")} />
-              </div>
-              <div className={css(styles.icon)}>
-                <span className={iconClass("last")} />
-              </div>
-            </div>
-            <div className={css(styles.iconGroup)}>
-              <div className={css(styles.icon)}>
-                <span
-                  className={iconClass("minus")}
-                  onClick={() => this.props.doUpdateValue(this.props.value - 1)}
-                />
-              </div>
-              <div className={css(styles.icon)}>
-                <span
-                  className={iconClass("plus")}
-                  onClick={() => this.props.doUpdateValue(this.props.value + 1)}
-                />
-              </div>
-            </div>
-          </div>
           <div className={css(styles.digits)}>
             {base10String.split("").map((digit, index) => (
               <div
@@ -122,10 +81,7 @@ class BinaryCounter extends React.Component<TypedProps> {
 
   static get propTypes(): React.ValidationMap<TypedProps> {
     return {
-      value: PropTypes.number.isRequired,
-      playing: PropTypes.bool.isRequired,
-      doUpdateValue: PropTypes.func.isRequired,
-      doTogglePlay: PropTypes.func.isRequired
+      value: PropTypes.number.isRequired
     };
   }
 }

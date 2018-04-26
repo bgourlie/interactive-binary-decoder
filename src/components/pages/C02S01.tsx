@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Page } from "../Page";
-import { PageHeader } from "../PageHeader";
+import {Page} from "../Page";
+import {PageHeader} from "../PageHeader";
 
 export const C02S01 = () => (
   <Page>

@@ -1,16 +1,17 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Figure } from "../Figure";
+import {Figure} from "../Figure";
 import BinaryCounter from "../BinaryCounter";
-import { Page } from "../Page";
+import {Page} from "../Page";
 import {
   Chapter01Section02State,
   figure1TogglePlay,
   figure1UpdateValue
 } from "../../reducer";
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
-import { PageHeader } from "../PageHeader";
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
+import {PageHeader} from "../PageHeader";
+import {StyleSheet, css, iconClass} from "../../styles";
 
 interface C01S02Properties extends JSX.IntrinsicAttributes {
   readonly figure1Value: any;
@@ -25,6 +26,20 @@ interface C01S02TypedProperties extends C01S02Properties {
   readonly doFigure1UpdateValue: (value: number, pause: boolean) => void;
   readonly doFigure1TogglePlay: () => void;
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    padding: "0 0.25rem"
+  },
+  icons: {
+    display: "flex",
+    justifyContent: "flex-end",
+    padding: "0 0.25rem 0.25rem 0.25rem"
+  },
+  iconGroup: {
+    display: "flex"
+  }
+});
 
 export class C01S02 extends React.Component<C01S02TypedProperties> {
   private timerId: number | null = null;
@@ -67,18 +82,59 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
           system. The only difference is the number of digits required to
           represent the same number.
         </p>
+        <div className={css(styles.icons)}>
+          <div className={css(styles.iconGroup)}>
+            <div className={css(styles.icon)}>
+              <span
+                className={iconClass("first")}
+                onClick={() => this.props.doFigure1UpdateValue(0, true)}
+              />
+            </div>
+            <div className={css(styles.icon)}>
+              <span
+                className={iconClass(
+                  this.props.figure1Playing ? "pause" : "play"
+                )}
+                onClick={() => this.props.doFigure1TogglePlay()}
+              />
+            </div>
+            <div className={css(styles.icon)}>
+              <span
+                className={iconClass("last")}
+                onClick={() => this.props.doFigure1UpdateValue(255, true)}
+              />
+            </div>
+          </div>
+          <div className={css(styles.iconGroup)}>
+            <div className={css(styles.icon)}>
+              <span
+                className={iconClass("minus")}
+                onClick={() =>
+                  this.props.doFigure1UpdateValue(
+                    this.props.figure1Value - 1,
+                    true
+                  )
+                }
+              />
+            </div>
+            <div className={css(styles.icon)}>
+              <span
+                className={iconClass("plus")}
+                onClick={() =>
+                  this.props.doFigure1UpdateValue(
+                    this.props.figure1Value + 1,
+                    true
+                  )
+                }
+              />
+            </div>
+          </div>
+        </div>
         <Figure
           number={1}
           description={"A base 10 number and its binary equivalent"}
         >
-          <BinaryCounter
-            value={this.props.figure1Value}
-            playing={this.props.figure1Playing}
-            doTogglePlay={this.props.doFigure1TogglePlay}
-            doUpdateValue={(value: number) =>
-              this.props.doFigure1UpdateValue(value, true)
-            }
-          />
+          <BinaryCounter value={this.props.figure1Value}/>
         </Figure>
         <p>
           Since we're used to interpreting numbers in base-10, we have an
