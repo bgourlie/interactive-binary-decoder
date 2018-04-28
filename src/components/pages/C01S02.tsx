@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { Figure } from "../Figure";
-import { BinaryCounter } from "../BinaryCounter";
 import { Page } from "../Page";
 import {
   Chapter01Section02State,
@@ -14,6 +13,7 @@ import { PageHeader } from "../PageHeader";
 import { StyleSheet, css } from "../../styles";
 import { PlayerControls } from "../PlayerControls";
 import { IncrementControls } from "../IncrementControls";
+import { NumberDisplay } from "../NumberDisplay";
 
 interface StateProps {
   readonly figure1Value: number;
@@ -33,6 +33,14 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     padding: "0 0.25rem 0.25rem 0.25rem"
+  },
+  figure1: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  digitsContainer: {
+    display: "flex",
+    flexDirection: "column"
   }
 });
 
@@ -80,7 +88,22 @@ export class C01S02 extends React.PureComponent<Props> {
           number={1}
           description={"A base 10 number and its binary equivalent"}
         >
-          <BinaryCounter value={this.props.figure1Value} />
+          <div className={css(styles.figure1)}>
+            <div className={css(styles.digitsContainer)}>
+              <NumberDisplay
+                base={10}
+                value={this.props.figure1Value}
+                zeroPadding={3}
+                hideInsignificantDigits={true}
+              />
+              <NumberDisplay
+                base={2}
+                value={this.props.figure1Value}
+                zeroPadding={8}
+                hideInsignificantDigits={true}
+              />
+            </div>
+          </div>
         </Figure>
         <div className={css(styles.figure1Controls)}>
           <PlayerControls
@@ -114,17 +137,23 @@ export class C01S02 extends React.PureComponent<Props> {
           Like counting, there's a common approach to determining the value of a
           number represented by any numeral system, and it's actually pretty
           simple. First, we'll establish a few terms:
-          <ul>
-            <li>
-              <i>Base</i> : The number of distinct values a single digit can
-              represent using the given numeral system.
-            </li>
-            <li>
-              <i>Magnitude</i> : The position of the digit, where the rightmost
-              digit has a magnitude of one, with each subsequent digit to the
-              left increasing in magnitude by one.
-            </li>
-          </ul>
+        </p>
+        <ul>
+          <li>
+            <i>Base</i> : The number of distinct values a single digit can
+            represent using the given numeral system.
+          </li>
+          <li>
+            <i>Magnitude</i> : The position of the digit, where the rightmost
+            digit has a magnitude of one, with each subsequent digit to the left
+            increasing in magnitude by one.
+          </li>
+        </ul>
+        <p>
+          To determine the value of a number represented by any given numeral
+          system, you raise the value of each digit to the <i>base</i> of the
+          numeral system, and multiply it by the digit's <i>magnitude</i> and
+          then sum the results. Figure 2 below illustrates this.
         </p>
       </Page>
     );
