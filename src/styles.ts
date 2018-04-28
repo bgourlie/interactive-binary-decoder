@@ -1,21 +1,26 @@
-import {StyleSheet, css} from "aphrodite/no-important";
+import { StyleSheet, css } from "aphrodite/no-important";
 
 type Icon = "plus" | "minus" | "first" | "last" | "play" | "pause";
 
 export const globalStyles = StyleSheet.create({
   monospace: {
     fontFamily: '"Inconsolata", monospace'
+  },
+  iconGroup: {
+    display: "flex"
   }
 });
 
 const iconStyles = StyleSheet.create({
   icon: {
+    cursor: "pointer",
     fontFamily: "'icomoon'",
     speak: "none",
     fontStyle: "normal",
     fontWeight: "normal",
     fontVariant: "normal",
     textTransform: "none",
+    padding: "0 0.25rem",
     lineHeight: "1",
     "-webkit-font-smoothing": "antialiased",
     "-moz-osx-font-smoothing": "grayscale"
@@ -64,4 +69,4 @@ export const iconClass = (icon: Icon) => {
   );
 };
 
-export {StyleSheet, css};
+export { StyleSheet, css };

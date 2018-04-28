@@ -1,11 +1,13 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {StyleSheet, css} from "../styles";
+import { StyleSheet, css } from "../styles";
 
 interface PageHeaderComponent {
   propTypes?: PropTypes.ValidationMap<PageProperties>;
 
-  (props: PageHeaderTypedProperties): React.ReactElement<PageHeaderTypedProperties>;
+  (props: PageHeaderTypedProperties): React.ReactElement<
+    PageHeaderTypedProperties
+  >;
 }
 
 interface PageProperties extends JSX.IntrinsicAttributes {

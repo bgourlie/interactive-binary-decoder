@@ -1,19 +1,19 @@
 import * as React from "react";
 import * as Paths from "../paths";
-import {ChapterModel} from "../models";
+import { ChapterModel } from "../models";
 import * as PropTypes from "prop-types";
-import {css, StyleSheet} from "../styles";
-import {ApplicationState} from "../reducer";
-import {Dispatch} from "redux";
-import {connect} from "react-redux";
-import {pushSection} from "../router";
+import { css, StyleSheet } from "../styles";
+import { ApplicationState } from "../reducer";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { pushSection } from "../router";
 
 const chapters: ChapterModel[] = [
   {
     id: 1,
     name: "Introduction",
     sections: [
-      {id: 1, name: "Welcome!", path: Paths.CHAPTER_01_SECTION_01},
+      { id: 1, name: "Welcome!", path: Paths.CHAPTER_01_SECTION_01 },
       {
         id: 2,
         name: "Representing numbers in binary",
@@ -30,7 +30,7 @@ const chapters: ChapterModel[] = [
     id: 2,
     name: "The Floating Point Binary Format",
     sections: [
-      {id: 1, name: "The Sign Bit", path: Paths.CHAPTER_02_SECTION_01},
+      { id: 1, name: "The Sign Bit", path: Paths.CHAPTER_02_SECTION_01 },
       {
         id: 2,
         name: "The Exponent Bits",
@@ -48,7 +48,9 @@ const chapters: ChapterModel[] = [
 interface TableOfContentsComponent {
   propTypes?: PropTypes.ValidationMap<TableOfContentsProperties>;
 
-  (props: TableOfContentsTypedProperties): React.ReactElement<TableOfContentsTypedProperties>;
+  (props: TableOfContentsTypedProperties): React.ReactElement<
+    TableOfContentsTypedProperties
+  >;
 }
 
 interface TableOfContentsProperties extends JSX.IntrinsicAttributes {

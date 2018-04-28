@@ -1,4 +1,4 @@
-import {History} from "history";
+import { History } from "history";
 import * as Paths from "./paths";
 
 const PUSH = "ROUTER/PUSH";

@@ -1,4 +1,4 @@
-import {ApplicationPath} from "./paths";
+import { ApplicationPath } from "./paths";
 
 export interface ChapterModel {
   readonly id: number;

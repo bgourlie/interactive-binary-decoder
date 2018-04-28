@@ -1,5 +1,5 @@
-import {History} from "history";
-import {Store} from "redux";
+import { History } from "history";
+import { Store } from "redux";
 import * as Paths from "./paths";
 
 const LOCATION_CHANGE = "LOCATION_CHANGE";
@@ -93,7 +93,7 @@ export const figure1TogglePlay = (): Figure1TogglePlayAction => ({
 function initialStateFromPath(path: string): ApplicationState {
   switch (path) {
     case Paths.CHAPTER_01_SECTION_01:
-      return {selectedChapter: 1, selectedSection: 1};
+      return { selectedChapter: 1, selectedSection: 1 };
     case Paths.CHAPTER_01_SECTION_02:
       return {
         selectedChapter: 1,
@@ -102,15 +102,15 @@ function initialStateFromPath(path: string): ApplicationState {
         figure1Playing: true
       };
     case Paths.CHAPTER_01_SECTION_03:
-      return {selectedChapter: 1, selectedSection: 3};
+      return { selectedChapter: 1, selectedSection: 3 };
     case Paths.CHAPTER_02_SECTION_01:
-      return {selectedChapter: 2, selectedSection: 1};
+      return { selectedChapter: 2, selectedSection: 1 };
     case Paths.CHAPTER_02_SECTION_02:
-      return {selectedChapter: 2, selectedSection: 2};
+      return { selectedChapter: 2, selectedSection: 2 };
     case Paths.CHAPTER_02_SECTION_03:
-      return {selectedChapter: 2, selectedSection: 3};
+      return { selectedChapter: 2, selectedSection: 3 };
     default:
-      return {selectedChapter: -1, selectedSection: -1};
+      return { selectedChapter: -1, selectedSection: -1 };
   }
 }
 
@@ -136,7 +136,7 @@ export const appReducer = (
   state: ApplicationState,
   action: Action
 ): ApplicationState => {
-  state = state || {selectedChapter: 1, selectedSection: 1};
+  state = state || { selectedChapter: 1, selectedSection: 1 };
   switch (action.type) {
     case LOCATION_CHANGE:
       return initialStateFromPath(action.path);

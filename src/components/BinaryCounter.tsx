@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {StyleSheet, css, globalStyles, iconClass} from "../styles";
+import { StyleSheet, css, globalStyles, iconClass } from "../styles";
 
 const styles = StyleSheet.create({
   binaryCounter: {
