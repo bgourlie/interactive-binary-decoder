@@ -103,9 +103,9 @@ export class C01S02 extends React.PureComponent<Props> {
         <p>
           Since humans have been conditioned to interpret numbers in terms of
           base-10, we have an intuitive understanding of a base-10 number's
-          magnitude. For example, we can tell at a glance that 1,000,000 is a
-          lot in terms of dollars, but what if we interpreted those same digits
-          as binary? We've established that we need more digits to represent
+          size. For example, we can tell at a glance that 1,000,000 is a lot in
+          terms of dollars, but what if we interpreted those same digits as
+          binary? We've established that we need more digits to represent
           numbers in binary as opposed to base-10, so we can safely say that it
           represents fewer than one million. It turns out it represents a much
           smaller number&mdash;64 to be exact.
