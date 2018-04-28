@@ -48,7 +48,7 @@ export class NumberDisplay extends React.PureComponent<Props> {
         digits.push(i.toString(this.props.base));
       }
 
-      const mostSignificantDigitRegex = new RegExp(`[^${digits[0]}]`).compile();
+      const mostSignificantDigitRegex = new RegExp(`[^${digits[0]}]`);
 
       this.cachedState = {
         base: this.props.base,
@@ -67,6 +67,8 @@ export class NumberDisplay extends React.PureComponent<Props> {
 
     const mostSignificantDigitIndex =
       mostSignificantDigitMatch !== null ? mostSignificantDigitMatch.index : 2;
+
+    console.log(mostSignificantDigitIndex);
 
     return (
       <div className={css(styles.digits)}>
