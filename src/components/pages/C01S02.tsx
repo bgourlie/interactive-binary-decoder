@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { Figure } from "../Figure";
-import BinaryCounter from "../BinaryCounter";
+import { BinaryCounter } from "../BinaryCounter";
 import { Page } from "../Page";
 import {
   Chapter01Section02State,
@@ -11,23 +11,21 @@ import {
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { PageHeader } from "../PageHeader";
-import { StyleSheet, css, iconClass, globalStyles } from "../../styles";
+import { StyleSheet, css } from "../../styles";
 import { PlayerControls } from "../PlayerControls";
 import { IncrementControls } from "../IncrementControls";
 
-interface C01S02Properties extends JSX.IntrinsicAttributes {
-  readonly figure1Value: any;
-  readonly figure1Playing: any;
-  readonly doFigure1UpdateValue: any;
-  readonly doFigure1TogglePlay: any;
-}
-
-interface C01S02TypedProperties extends C01S02Properties {
+interface StateProps {
   readonly figure1Value: number;
   readonly figure1Playing: boolean;
+}
+
+interface DispatchProps {
   readonly doFigure1UpdateValue: (value: number, pause: boolean) => void;
   readonly doFigure1TogglePlay: () => void;
 }
+
+type Props = StateProps & DispatchProps;
 
 const styles = StyleSheet.create({
   icon: {},
@@ -38,7 +36,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class C01S02 extends React.Component<C01S02TypedProperties> {
+export class C01S02 extends React.PureComponent<Props> {
   private timerId: number | null = null;
 
   render(): React.ReactNode {
@@ -96,7 +94,7 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
           />
           <IncrementControls
             incrementClickHandler={() =>
-              this.props.doFigure1UpdateValue(this.props.figure1Value - 1, true)
+              this.props.doFigure1UpdateValue(this.props.figure1Value + 1, true)
             }
             decrementClickHandler={() =>
               this.props.doFigure1UpdateValue(this.props.figure1Value - 1, true)
@@ -132,7 +130,7 @@ export class C01S02 extends React.Component<C01S02TypedProperties> {
     }
   }
 
-  static get propTypes(): React.ValidationMap<C01S02Properties> {
+  static get propTypes(): React.ValidationMap<Props> {
     return {
       figure1Value: PropTypes.number.isRequired,
       doFigure1UpdateValue: PropTypes.func.isRequired,
@@ -156,6 +154,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
 };
 
-export const C01S02Container = connect(mapStateToProps, mapDispatchToProps)(
-  C01S02
-);
+export const C01S02Container = connect<
+  StateProps,
+  DispatchProps,
+  {},
+  Chapter01Section02State
+>(mapStateToProps, mapDispatchToProps)(C01S02);

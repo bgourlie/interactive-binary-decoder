@@ -46,20 +46,11 @@ const chapters: ChapterModel[] = [
 ];
 
 interface TableOfContentsComponent {
-  propTypes?: PropTypes.ValidationMap<TableOfContentsProperties>;
-
-  (props: TableOfContentsTypedProperties): React.ReactElement<
-    TableOfContentsTypedProperties
-  >;
+  (props: Props): React.ReactElement<Props>;
+  propTypes?: PropTypes.ValidationMap<Props>;
 }
 
-interface TableOfContentsProperties extends JSX.IntrinsicAttributes {
-  readonly currentChapter: any;
-  readonly currentSection: any;
-  readonly doSectionChange: any;
-}
-
-interface TableOfContentsTypedProperties extends TableOfContentsProperties {
+interface Props {
   readonly currentChapter: number;
   readonly currentSection: number;
   readonly doSectionChange: (chapter: number, section: number) => void;
@@ -81,11 +72,11 @@ const styles = StyleSheet.create({
   chapter: {
     fontWeight: "bold",
     margin: "0 0 1.2rem 0",
-    opacity: "0.5",
+    opacity: 0.5,
     transition: "opacity 100ms linear"
   },
   selectedChapter: {
-    opacity: "1"
+    opacity: 1
   },
   chapterHeader: {
     margin: "0 0 0.5rem 0",
@@ -119,7 +110,7 @@ const sectionClass = (isActive: boolean) => {
 
 function linkClickHandler(
   e: React.MouseEvent<HTMLAnchorElement>,
-  props: TableOfContentsTypedProperties,
+  props: Props,
   chapter: number,
   section: number
 ) {
@@ -127,9 +118,7 @@ function linkClickHandler(
   props.doSectionChange(chapter, section);
 }
 
-export const TableOfContents: TableOfContentsComponent = (
-  props: TableOfContentsTypedProperties
-) => (
+export const TableOfContents: TableOfContentsComponent = (props: Props) => (
   <nav className={css(styles.tableOfContents)}>
     <ul className={css(styles.chapters)}>
       {chapters.map((chapter, index) => {

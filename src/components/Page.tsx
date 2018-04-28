@@ -3,16 +3,12 @@ import * as PropTypes from "prop-types";
 import { StyleSheet, css } from "../styles";
 
 interface PageComponent {
-  propTypes?: PropTypes.ValidationMap<PageProperties>;
-
-  (props: PageTypedProperties): React.ReactElement<PageTypedProperties>;
+  (props: Props): React.ReactElement<Props>;
+  displayName?: "Page";
+  propTypes?: PropTypes.ValidationMap<Props>;
 }
 
-interface PageProperties extends JSX.IntrinsicAttributes {
-  readonly children: any;
-}
-
-interface PageTypedProperties extends PageProperties {
+interface Props {
   readonly children: JSX.Element | JSX.Element[];
 }
 
@@ -28,9 +24,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export const Page: PageComponent = (props: PageTypedProperties) => (
+export const Page: PageComponent = (props: Props) => (
   <div className={css(styles.page)}>{props.children}</div>
 );
+
+Page.displayName = "Page";
 
 Page.propTypes = {
   children: PropTypes.oneOfType([

@@ -3,18 +3,12 @@ import * as PropTypes from "prop-types";
 import { StyleSheet, css } from "../styles";
 
 interface PageHeaderComponent {
-  propTypes?: PropTypes.ValidationMap<PageProperties>;
-
-  (props: PageHeaderTypedProperties): React.ReactElement<
-    PageHeaderTypedProperties
-  >;
+  (props: Props): React.ReactElement<Props>;
+  propTypes?: PropTypes.ValidationMap<Props>;
+  displayName?: "PageHeader";
 }
 
-interface PageProperties extends JSX.IntrinsicAttributes {
-  readonly children: any;
-}
-
-interface PageHeaderTypedProperties extends PageProperties {
+interface Props {
   readonly children: string;
 }
 
@@ -26,9 +20,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export const PageHeader: PageHeaderComponent = (
-  props: PageHeaderTypedProperties
-) => <h1 className={css(styles.pageHeader)}>{props.children}</h1>;
+export const PageHeader: PageHeaderComponent = (props: Props) => (
+  <h1 className={css(styles.pageHeader)}>{props.children}</h1>
+);
+
+PageHeader.displayName = "PageHeader";
 
 PageHeader.propTypes = {
   children: PropTypes.string

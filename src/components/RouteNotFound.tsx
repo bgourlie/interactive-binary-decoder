@@ -1,9 +1,10 @@
 import * as React from "react";
+import { Page } from "./Page";
 
 const RouteNotFound = () => (
-  <section>
+  <Page>
     <p>Where are you trying to go homie?</p>
-  </section>
+  </Page>
 );
 
 export default RouteNotFound;

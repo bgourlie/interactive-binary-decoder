@@ -3,9 +3,9 @@ import * as PropTypes from "prop-types";
 import { StyleSheet, css } from "../styles";
 
 interface FigureComponent {
-  propTypes?: PropTypes.ValidationMap<FigureProperties>;
-
   (props: FigureTypedProperties): React.ReactElement<FigureTypedProperties>;
+  propTypes?: PropTypes.ValidationMap<FigureProperties>;
+  displayName?: "Figure";
 }
 
 interface FigureProperties extends JSX.IntrinsicAttributes {
@@ -57,6 +57,8 @@ export const Figure: FigureComponent = (props: FigureTypedProperties) => (
     </div>
   </section>
 );
+
+Figure.displayName = "Figure";
 
 Figure.propTypes = {
   number: PropTypes.number.isRequired,
