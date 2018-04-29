@@ -1,0 +1,23 @@
+{
+  "name": "wtf-serverless",
+  "version": "1.0.0",
+  "description": "serverless scripts",
+  "main": "index.js",
+  "engines": {
+    "node": "8.1.0"
+  },
+  "author": "W. Brian Gourlie",
+  "license": "ISC",
+  "dependencies": {
+    "@types/aws-sdk": "^0.0.38",
+    "@types/axios": "^0.9.32",
+    "@types/fs-extra": "^0.0.33",
+    "@types/node": "^8.1.0",
+    "aws-sdk": "^2.6.10",
+    "axios": "^0.15.2",
+    "fs-extra": "^0.30.0",
+    "s3": "^4.4.0",
+    "ts-node": "^1.6.0",
+    "typescript": "^2.1.4"
+  }
+}

@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { css, StyleSheet, globalStyles } from "../styles";
-import { number } from "prop-types";
 
 const styles = StyleSheet.create({
   digits: {
@@ -41,12 +40,12 @@ interface Props {
 
 export const NumberDisplay: NumberDisplayComponent = (props: Props) => {
   const zeroNumeral = (0).toString(props.base);
-  const mostSignificantDigitRegex = new RegExp(`[^${zeroNumeral}]`);
 
   const numberString = props.value
     .toString(props.base)
     .padStart(props.zeroPadding || 0, zeroNumeral);
 
+  const mostSignificantDigitRegex = new RegExp(`[^${zeroNumeral}]`);
   const mostSignificantDigitMatch = mostSignificantDigitRegex.exec(
     numberString
   );
