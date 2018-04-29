@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { css, StyleSheet, globalStyles } from "../styles";
+import { number } from "prop-types";
 
 const styles = StyleSheet.create({
   digits: {
@@ -25,6 +26,12 @@ const digitClass = (hideDigit: boolean) => {
   );
 };
 
+interface NumberDisplayComponent {
+  (props: Props): React.ReactNode;
+  displayName?: "NumberDisplay";
+  propTypes?: PropTypes.ValidationMap<Props>;
+}
+
 interface Props {
   base: number;
   value: number;
@@ -32,67 +39,44 @@ interface Props {
   hideInsignificantDigits?: boolean;
 }
 
-interface CachedState {
-  readonly base: number;
-  readonly digits: string[];
-  readonly mostSignificantDigitRegex: RegExp;
-}
+export const NumberDisplay: NumberDisplayComponent = (props: Props) => {
+  const zeroNumeral = (0).toString(props.base);
+  const mostSignificantDigitRegex = new RegExp(`[^${zeroNumeral}]`);
 
-export class NumberDisplay extends React.PureComponent<Props> {
-  private cachedState?: CachedState;
+  const numberString = props.value
+    .toString(props.base)
+    .padStart(props.zeroPadding || 0, zeroNumeral);
 
-  render(): React.ReactNode {
-    if (!this.cachedState || this.cachedState.base !== this.props.base) {
-      const digits = [];
-      for (let i = 0; i < this.props.base; i++) {
-        digits.push(i.toString(this.props.base));
-      }
+  const mostSignificantDigitMatch = mostSignificantDigitRegex.exec(
+    numberString
+  );
 
-      const mostSignificantDigitRegex = new RegExp(`[^${digits[0]}]`);
+  const mostSignificantDigitIndex =
+    mostSignificantDigitMatch !== null
+      ? mostSignificantDigitMatch.index
+      : numberString.length - 1;
 
-      this.cachedState = {
-        base: this.props.base,
-        digits: digits,
-        mostSignificantDigitRegex: mostSignificantDigitRegex
-      };
-    }
+  return (
+    <div className={css(styles.digits)}>
+      {numberString.split("").map((digit, index) => (
+        <div
+          key={index}
+          className={digitClass(
+            !!props.hideInsignificantDigits && index < mostSignificantDigitIndex
+          )}
+        >
+          {digit}
+        </div>
+      ))}
+    </div>
+  );
+};
 
-    const numberString = this.props.value
-      .toString(this.cachedState.base)
-      .padStart(this.props.zeroPadding || 0, this.cachedState.digits[0]);
+NumberDisplay.displayName = "NumberDisplay";
 
-    const mostSignificantDigitMatch = this.cachedState.mostSignificantDigitRegex.exec(
-      numberString
-    );
-
-    const mostSignificantDigitIndex =
-      mostSignificantDigitMatch !== null ? mostSignificantDigitMatch.index : 2;
-
-    console.log(mostSignificantDigitIndex);
-
-    return (
-      <div className={css(styles.digits)}>
-        {numberString.split("").map((digit, index) => (
-          <div
-            key={index}
-            className={digitClass(
-              !!this.props.hideInsignificantDigits &&
-                index < mostSignificantDigitIndex
-            )}
-          >
-            {digit}
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  static get propTypes(): React.ValidationMap<Props> {
-    return {
-      base: PropTypes.number.isRequired,
-      value: PropTypes.number.isRequired,
-      zeroPadding: PropTypes.number,
-      hideInsignificantDigits: PropTypes.bool
-    };
-  }
-}
+NumberDisplay.propTypes = {
+  base: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+  zeroPadding: PropTypes.number,
+  hideInsignificantDigits: PropTypes.bool
+};
