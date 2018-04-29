@@ -6,7 +6,9 @@ import { TableOfContentsContainer } from "./components/TableOfContents";
 import { css, StyleSheet } from "./styles";
 import createBrowserHistory from "history/createBrowserHistory";
 import {
+  ApplicationAction,
   ApplicationState,
+  notFoundState,
   appReducer,
   startLocationChangeListener
 } from "./reducer";
@@ -22,7 +24,7 @@ import { C01S01 } from "./components/pages/C01S01";
 
 const history = createBrowserHistory();
 const middleware = routerMiddleware(history);
-const store = createStore<ApplicationState>(
+const store = createStore<ApplicationState, ApplicationAction, {}, {}>(
   appReducer,
   {},
   applyMiddleware(middleware)
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function renderPage(state: ApplicationState) {
+function renderPage(state: ApplicationState = notFoundState) {
   if (state.selectedChapter === 1 && state.selectedSection === 1) {
     return <C01S01 />;
   } else if (state.selectedChapter === 1 && state.selectedSection === 2) {

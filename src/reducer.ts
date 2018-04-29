@@ -1,10 +1,15 @@
 import { History } from "history";
-import { Store } from "redux";
+import { Action, Store } from "redux";
 import * as Paths from "./paths";
 
 const LOCATION_CHANGE = "LOCATION_CHANGE";
 const FIGURE_1_UPDATE_VALUE = "FIGURE_1_UPDATE_VALUE";
 const FIGURE_1_TOGGLE_PLAY = "FIGURE_1_TOGGLE_PLAY";
+
+type ActionType =
+  | typeof LOCATION_CHANGE
+  | typeof FIGURE_1_UPDATE_VALUE
+  | typeof FIGURE_1_TOGGLE_PLAY;
 
 export interface Chapter01Section01State {
   readonly selectedChapter: 1;
@@ -43,6 +48,11 @@ export interface NotFoundState {
   readonly selectedSection: -1;
 }
 
+export const notFoundState: NotFoundState = {
+  selectedChapter: -1,
+  selectedSection: -1
+};
+
 export type ApplicationState =
   | Chapter01Section01State
   | Chapter01Section02State
@@ -50,24 +60,25 @@ export type ApplicationState =
   | Chapter02Section01State
   | Chapter02Section02State
   | Chapter02Section03State
-  | NotFoundState;
+  | NotFoundState
+  | undefined;
 
-export interface LocationChangeAction {
+export interface LocationChangeAction extends Action<ActionType> {
   readonly type: typeof LOCATION_CHANGE;
   readonly path: string;
 }
 
-export interface Figure1UpdateValueAction {
+export interface Figure1UpdateValueAction extends Action<ActionType> {
   readonly type: typeof FIGURE_1_UPDATE_VALUE;
   readonly value: number;
   readonly pause: boolean;
 }
 
-export interface Figure1TogglePlayAction {
+export interface Figure1TogglePlayAction extends Action<ActionType> {
   readonly type: typeof FIGURE_1_TOGGLE_PLAY;
 }
 
-type Action =
+export type ApplicationAction =
   | LocationChangeAction
   | Figure1UpdateValueAction
   | Figure1TogglePlayAction;
@@ -110,7 +121,7 @@ function initialStateFromPath(path: string): ApplicationState {
     case Paths.CHAPTER_02_SECTION_03:
       return { selectedChapter: 2, selectedSection: 3 };
     default:
-      return { selectedChapter: -1, selectedSection: -1 };
+      return notFoundState;
   }
 }
 
@@ -125,6 +136,10 @@ function C01S02Guard(
   state: ApplicationState,
   callback: (chapterState: Chapter01Section02State) => ApplicationState
 ) {
+  if (!state) {
+    throw new Error("state must be defined");
+  }
+
   if (state.selectedChapter === 1 && state.selectedSection === 2) {
     return callback(state);
   }
@@ -134,7 +149,7 @@ function C01S02Guard(
 
 export const appReducer = (
   state: ApplicationState,
-  action: Action
+  action: ApplicationAction
 ): ApplicationState => {
   state = state || { selectedChapter: 1, selectedSection: 1 };
   switch (action.type) {

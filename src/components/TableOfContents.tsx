@@ -3,7 +3,7 @@ import * as Paths from "../paths";
 import { ChapterModel } from "../models";
 import * as PropTypes from "prop-types";
 import { css, StyleSheet } from "../styles";
-import { ApplicationState } from "../reducer";
+import { ApplicationState, notFoundState } from "../reducer";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { pushSection } from "../router";
@@ -163,7 +163,7 @@ TableOfContents.propTypes = {
   doSectionChange: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
+const mapStateToProps = (state: ApplicationState = notFoundState) => ({
   currentChapter: state.selectedChapter,
   currentSection: state.selectedSection
 });

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "parcel ./src/root.html --no-hmr",
     "dev-debug": "node %NODE_DEBUG_OPTION% ./node_modules/parcel-bundler/bin/cli.js ./src/root.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build ./src/root.html"
   },
   "keywords": [],
   "author": "W. Brian Gourlie",

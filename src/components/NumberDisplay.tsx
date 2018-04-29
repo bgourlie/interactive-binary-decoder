@@ -27,7 +27,7 @@ const digitClass = (hideDigit: boolean) => {
 };
 
 interface NumberDisplayComponent {
-  (props: Props): React.ReactNode;
+  (props: Props): React.ReactElement<Props>;
   displayName?: "NumberDisplay";
   propTypes?: PropTypes.ValidationMap<Props>;
 }
