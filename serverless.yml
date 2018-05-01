@@ -1,0 +1,21 @@
+service:
+  name: wtfloat
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+package:
+  exclude:
+    - '**'
+  include:
+    - src/serverless_handlers.js
+    - serverless_dist/ssr_handler.js
+
+functions:
+  hello:
+    handler: src/serverless_handlers.hello
+    events:
+      - http:
+          method: get
+          path: hello

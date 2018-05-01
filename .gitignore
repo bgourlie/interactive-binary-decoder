@@ -1,5 +1,8 @@
 node_modules
 .idea
 dist
+app_dist
+serverless_dist
 .cache
+.serverless
 target

@@ -6,18 +6,22 @@
     "dev": "parcel ./src/root.html --no-hmr",
     "dev-debug": "node %NODE_DEBUG_OPTION% ./node_modules/parcel-bundler/bin/cli.js ./src/root.html",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build ./src/root.html"
+    "build": "parcel build ./src/root.html --out-dir app_dist",
+    "build_ssr": "parcel build ./src/ssr_handler.ts --no-minify --out-dir serverless_dist",
+    "deploy": "npm run build_ssr && serverless deploy"
   },
   "keywords": [],
   "author": "W. Brian Gourlie",
   "license": "MIT",
   "devDependencies": {
-    "@types/flux": "^3.1.7",
+    "@types/aws-lambda": "0.0.22",
+    "@types/exenv": "^1.2.0",
+    "@types/history": "^4.6.2",
+    "@types/node": "^8.0.57",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.3.13",
     "@types/react-dom": "^16.0.5",
     "@types/react-redux": "^5.0.19",
-    "@types/react-router": "^4.0.24",
     "@types/shelljs": "^0.7.8",
     "node-sass": "^4.9.0",
     "parcel-bundler": "^1.7.1",
@@ -26,6 +30,7 @@
   },
   "dependencies": {
     "aphrodite": "^2.2.0",
+    "exenv": "^1.2.2",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "prop-types": "^15.6.1",
