@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class C01S02 extends React.PureComponent<Props> {
+class C01S02 extends React.PureComponent<Props> {
   private timerId: number | null = null;
 
   render(): React.ReactNode {

@@ -16,21 +16,39 @@ import {
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import { routerMiddleware } from "./router";
-import { C01S02Container } from "./components/pages/C01S02";
-import { C02S03 } from "./components/pages/C02S03";
-import { C02S02 } from "./components/pages/C02S02";
-import { C02S01 } from "./components/pages/C02S01";
-import { C01S03 } from "./components/pages/C01S03";
-import { C01S01 } from "./components/pages/C01S01";
 
-const history = createBrowserHistory();
-const middleware = routerMiddleware(history);
-export const store = createStore<ApplicationState, ApplicationAction, {}, {}>(
-  appReducer,
-  {},
-  applyMiddleware(middleware)
-);
-startLocationChangeListener(history, store);
+// const pages = {
+//   C01S01: import("./components/pages/C01S01"),
+//   C01S02: import("./components/pages/C01S02"),
+//   C01S03: import("./components/pages/C01S03"),
+//   C02S01: import("./components/pages/C02S01"),
+//   C02S02: import("./components/pages/C02S02"),
+//   C02S03: import("./components/pages/C02S03")
+// };
+
+import { C01S01 } from "./components/pages/C01S01";
+import { C01S02Container } from "./components/pages/C01S02";
+import { C01S03 } from "./components/pages/C01S03";
+import { C02S01 } from "./components/pages/C02S01";
+import { C02S02 } from "./components/pages/C02S02";
+import { C02S03 } from "./components/pages/C02S03";
+
+let store: any;
+if (ExecutionEnvironment.canUseDOM) {
+  const history = createBrowserHistory();
+  const middleware = routerMiddleware(history);
+  store = createStore<ApplicationState, ApplicationAction, {}, {}>(
+    appReducer,
+    {},
+    applyMiddleware(middleware)
+  );
+  startLocationChangeListener(history, store);
+} else {
+  store = createStore<ApplicationState, ApplicationAction, {}, {}>(
+    appReducer,
+    {}
+  );
+}
 
 const styles = StyleSheet.create({
   appContainerInner: {
@@ -56,7 +74,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function renderPage(state: ApplicationState = notFoundState) {
+function getPage(state: ApplicationState = notFoundState) {
   if (state.selectedChapter === 1 && state.selectedSection === 1) {
     return <C01S01 />;
   } else if (state.selectedChapter === 1 && state.selectedSection === 2) {
@@ -74,7 +92,8 @@ function renderPage(state: ApplicationState = notFoundState) {
   }
 }
 
-function rootElement(state: ApplicationState) {
+export function rootElement() {
+  const state = store.getState();
   return (
     <Provider store={store}>
       <section className={css(styles.appContainerInner)}>
@@ -87,7 +106,7 @@ function rootElement(state: ApplicationState) {
         <section className={css(styles.appBody)}>
           <TableOfContentsContainer />
           <section id="page" className={css(styles.pageContainer)}>
-            {renderPage(state)}
+            {getPage(state)}
           </section>
         </section>
       </section>
@@ -96,12 +115,7 @@ function rootElement(state: ApplicationState) {
 }
 
 export function render() {
-  const state = store.getState();
-  ReactDOM.render(
-    rootElement(state),
-    document.getElementById("app-container")
-  );
+  ReactDOM.render(rootElement(), document.getElementById("app-container"));
 }
 // Subscribe to history changes
 store.subscribe(render);
-

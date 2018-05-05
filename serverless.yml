@@ -13,9 +13,9 @@ package:
     - serverless_dist/ssr_handler.js
 
 functions:
-  hello:
-    handler: src/serverless_handlers.hello
+  ssr:
+    handler: src/serverless_handlers.ssr
     events:
       - http:
           method: get
-          path: hello
+          path: ssr

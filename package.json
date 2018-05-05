@@ -6,7 +6,8 @@
     "dev": "parcel ./src/root.html --no-hmr",
     "dev-debug": "node %NODE_DEBUG_OPTION% ./node_modules/parcel-bundler/bin/cli.js ./src/root.html",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build ./src/root.html --out-dir app_dist",
+    "build": "parcel build ./src/root.tsx --out-dir app_dist",
+    "build_debug": "parcel build ./src/root.tsx --out-dir app_dist --no-minify",
     "build_ssr": "parcel build ./src/ssr_handler.ts --no-minify --out-dir serverless_dist",
     "deploy": "npm run build_ssr && serverless deploy"
   },
@@ -30,6 +31,7 @@
   },
   "dependencies": {
     "aphrodite": "^2.2.0",
+    "cheerio": "^1.0.0-rc.2",
     "exenv": "^1.2.2",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
