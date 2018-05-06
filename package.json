@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "description": "An interactive guide to floating point numbers",
   "scripts": {
+    "clean": "rimraf serverless_dist app_dist",
     "dev": "parcel ./src/root.html --no-hmr",
     "dev-debug": "node %NODE_DEBUG_OPTION% ./node_modules/parcel-bundler/bin/cli.js ./src/root.html",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel build ./src/root.html --no-source-maps --out-dir app_dist",
     "build-debug": "parcel build ./src/root.html --out-dir app_dist --no-minify",
-    "build-ssr": "parcel build ./src/ssr_handler.ts --no-minify --no-source-maps --out-dir serverless_dist",
-    "deploy": "npm run build-ssr && npm run build && serverless deploy && serverless client deploy --no-confirm"
+    "build-ssr": "parcel build ./src/ssr_handler.ts --no-source-maps --out-dir serverless_dist",
+    "deploy-dev": "cross-env WTF_STAGE=\"dev\" npm run deploy",
+    "deploy": "npm run clean && npm run build-ssr && npm run build && serverless deploy && serverless client deploy --no-confirm"
   },
   "keywords": [],
   "author": "W. Brian Gourlie",
@@ -24,13 +26,16 @@
     "@types/react-dom": "^16.0.5",
     "@types/react-redux": "^5.0.19",
     "@types/shelljs": "^0.7.9",
+    "cross-env": "^5.1.4",
     "node-sass": "^4.9.0",
     "parcel-bundler": "^1.8.1",
+    "rimraf": "^2.6.2",
     "shelljs": "^0.8.1",
     "typescript": "^2.8.3"
   },
   "dependencies": {
     "aphrodite": "^2.2.0",
+    "aws-sdk": "^2.233.1",
     "cheerio": "^1.0.0-rc.2",
     "exenv": "^1.2.2",
     "history": "^4.7.2",

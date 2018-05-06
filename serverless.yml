@@ -1,19 +1,20 @@
+custom:
+  settings: ${file(src/settings.js)}
+  client:
+    bucketName: ${self:custom.settings.staticAssetsS3Bucket}
+    distributionFolder: app_dist
+    indexDocument: root.html
+
 service:
-  name: wtfloat
+  name: ${self:custom.settings.serviceName}
 
 plugins:
   - serverless-finch
 
-custom:
-  client:
-    bucketName: static-assets-for-${self:service}-${self:provider.stage}
-    distributionFolder: app_dist
-    indexDocument: root.html
-
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: ${opt:stage, 'dev'}
+  stage: ${self:custom.settings.stage}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -28,7 +29,7 @@ resources:
     StaticAssetsBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.client.bucketName}
+        BucketName: ${self:custom.settings.staticAssetsS3Bucket}
 
 package:
   exclude:
