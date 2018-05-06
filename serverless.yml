@@ -1,9 +1,34 @@
 service:
   name: wtfloat
 
+plugins:
+  - serverless-finch
+
+custom:
+  client:
+    bucketName: static-assets-for-${self:service}-${self:provider.stage}
+    distributionFolder: app_dist
+    indexDocument: root.html
+
 provider:
   name: aws
   runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - s3:GetObject
+      Resource:
+        Fn::GetAtt:
+          - StaticAssetsBucket
+          - Arn
+
+resources:
+  Resources:
+    StaticAssetsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.client.bucketName}
 
 package:
   exclude:
@@ -19,3 +44,4 @@ functions:
       - http:
           method: get
           path: ssr
+

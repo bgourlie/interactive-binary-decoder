@@ -6,10 +6,10 @@
     "dev": "parcel ./src/root.html --no-hmr",
     "dev-debug": "node %NODE_DEBUG_OPTION% ./node_modules/parcel-bundler/bin/cli.js ./src/root.html",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build ./src/root.tsx --out-dir app_dist",
-    "build_debug": "parcel build ./src/root.tsx --out-dir app_dist --no-minify",
-    "build_ssr": "parcel build ./src/ssr_handler.ts --no-minify --out-dir serverless_dist",
-    "deploy": "npm run build_ssr && serverless deploy"
+    "build": "parcel build ./src/root.html --no-source-maps --out-dir app_dist",
+    "build-debug": "parcel build ./src/root.html --out-dir app_dist --no-minify",
+    "build-ssr": "parcel build ./src/ssr_handler.ts --no-minify --no-source-maps --out-dir serverless_dist",
+    "deploy": "npm run build-ssr && npm run build && serverless deploy && serverless client deploy --no-confirm"
   },
   "keywords": [],
   "author": "W. Brian Gourlie",
@@ -18,14 +18,14 @@
     "@types/aws-lambda": "0.0.22",
     "@types/exenv": "^1.2.0",
     "@types/history": "^4.6.2",
-    "@types/node": "^8.0.57",
+    "@types/node": "^8.10.12",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.3.13",
     "@types/react-dom": "^16.0.5",
     "@types/react-redux": "^5.0.19",
-    "@types/shelljs": "^0.7.8",
+    "@types/shelljs": "^0.7.9",
     "node-sass": "^4.9.0",
-    "parcel-bundler": "^1.7.1",
+    "parcel-bundler": "^1.8.1",
     "shelljs": "^0.8.1",
     "typescript": "^2.8.3"
   },
@@ -39,6 +39,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "serverless-finch": "^2.1.2"
   }
 }
