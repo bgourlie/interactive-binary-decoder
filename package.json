@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel build ./src/root.html --no-source-maps --out-dir app_dist",
     "build-debug": "parcel build ./src/root.html --out-dir app_dist --no-minify",
-    "build-ssr": "parcel build ./src/ssr_handler.ts --no-source-maps --out-dir serverless_dist",
+    "build-ssr": "parcel build ./src/ssr_handler.ts --no-source-maps --no-minify --out-dir serverless_dist",
     "deploy-dev": "cross-env WTF_STAGE=\"dev\" npm run deploy",
     "deploy": "npm run clean && npm run build-ssr && npm run build && serverless deploy && serverless client deploy --no-confirm"
   },
@@ -26,6 +26,7 @@
     "@types/react-dom": "^16.0.5",
     "@types/react-redux": "^5.0.19",
     "@types/shelljs": "^0.7.9",
+    "aws-sdk": "^2.233.1",
     "cross-env": "^5.1.4",
     "node-sass": "^4.9.0",
     "parcel-bundler": "^1.8.1",
@@ -35,7 +36,6 @@
   },
   "dependencies": {
     "aphrodite": "^2.2.0",
-    "aws-sdk": "^2.233.1",
     "cheerio": "^1.0.0-rc.2",
     "exenv": "^1.2.2",
     "history": "^4.7.2",
