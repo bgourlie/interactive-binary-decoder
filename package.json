@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel build ./src/root.html --no-source-maps --out-dir app_dist",
     "build-debug": "parcel build ./src/root.html --out-dir app_dist --no-minify",
-    "build-ssr": "parcel build ./src/ssr_handler.ts --no-source-maps --no-minify --out-dir serverless_dist",
+    "build-ssr": "parcel build ./src/ssr_handler.ts --no-source-maps --out-dir serverless_dist",
     "deploy-dev": "cross-env WTF_STAGE=\"dev\" npm run deploy",
     "deploy": "npm run clean && npm run build-ssr && npm run build && serverless deploy && serverless client deploy --no-confirm"
   },
@@ -18,6 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/aws-lambda": "0.0.22",
+    "@types/cheerio": "^0.22.7",
     "@types/exenv": "^1.2.0",
     "@types/history": "^4.6.2",
     "@types/node": "^8.10.12",
